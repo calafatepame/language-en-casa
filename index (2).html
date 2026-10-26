@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Language en casa</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+html{color-scheme:light}
+/* Layout: one column. Home = grid of six unit tiles + a mixed "simulacro" tile.
+   Unit = three practice modes + picture cards. Practice = one big card at a time. */
+:root{
+  --bg:#F4F6FC; --surface:#FFFFFF; --fg:#1D2340; --muted:#566086; --line:#D9DFF2; --soft:#ECF0FB;
+  --primary:#D62839; --on-primary:#FFFFFF; --ok:#1B7F47; --on-ok:#FFFFFF; --star:#F2A900;
+  --u1:#E5484D; --u2:#EE8A0A; --u3:#2F7FE0; --u4:#2D9A4E; --u5:#8A5CD6; --u6:#0E95A3;
+  --font-display:'Baloo 2','Trebuchet MS',system-ui,sans-serif;
+  --font-body:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#12162B; --surface:#1C2140; --fg:#EEF0FF; --muted:#A9B0D6; --line:#303766; --soft:#252B52;
+    --primary:#FF6B78; --on-primary:#2A0A10; --ok:#58D68D; --on-ok:#06210F; --star:#FFC83D;
+    --u1:#FF7A7F; --u2:#FFA940; --u3:#6AA6FF; --u4:#5CCB7A; --u5:#B391FF; --u6:#43C7D3;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12162B; --surface:#1C2140; --fg:#EEF0FF; --muted:#A9B0D6; --line:#303766; --soft:#252B52;
+  --primary:#FF6B78; --on-primary:#2A0A10; --ok:#58D68D; --on-ok:#06210F; --star:#FFC83D;
+  --u1:#FF7A7F; --u2:#FFA940; --u3:#6AA6FF; --u4:#5CCB7A; --u5:#B391FF; --u6:#43C7D3;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding-block:14px 56px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:var(--bg); color:var(--fg); font:16px/1.5 var(--font-body);
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{font-family:var(--font-display);line-height:1.1;text-wrap:balance}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,h1:focus-visible,h2:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+[tabindex="-1"]:focus{outline:none}
+
+.warn{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:14px;font-size:.92rem}
+.eyebrow{font-size:.78rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.stars{color:var(--star);letter-spacing:.12em;font-size:1.05rem;line-height:1}
+.stars .off{color:var(--line)}
+
+/* Home */
+.top{display:flex;flex-direction:column;gap:6px;padding-block:8px 20px}
+.top h1{font-size:clamp(2.2rem,10vw,3.2rem);font-weight:800}
+.lead{color:var(--muted);font-size:1.08rem;max-width:34em}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:560px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.tile{
+  --uc:var(--u1);
+  display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;min-width:0;
+  padding:14px 14px 16px;border-radius:22px;
+  border:2px solid color-mix(in srgb,var(--uc) 55%,var(--surface));
+  background:color-mix(in srgb,var(--uc) 14%,var(--surface));
+  transition:transform .12s ease;
+}
+.tile:hover{transform:translateY(-2px)}
+.ticon{font-size:2.5rem;line-height:1}
+.tnum{font-size:.74rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.ttitle{font-family:var(--font-display);font-weight:700;font-size:1.15rem;line-height:1.15;text-wrap:balance}
+.tile.sim{grid-column:1/-1;flex-direction:row;align-items:center;gap:14px}
+.tile.sim .tbody{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.tile.sim .tsub{color:var(--muted);font-size:.95rem}
+.vp{margin-top:16px!important}
+.vrow{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.vrow label{font-weight:800;font-size:.9rem}
+.vrow select{width:100%;min-height:44px;padding:8px 10px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--fg);font:inherit}
+.note{margin-top:24px;padding:16px 18px;border-radius:20px;background:var(--soft);border:1px solid var(--line)}
+.note h3{font-size:1.1rem;margin-bottom:8px}
+.note ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px;color:var(--fg)}
+
+/* Unit */
+.uhead{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.back{min-height:44px;padding:8px 16px;border-radius:14px;border:2px solid var(--line);background:var(--surface);font-weight:800}
+.band{
+  --uc:var(--u1);
+  display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:24px;margin-bottom:16px;
+  border:2px solid color-mix(in srgb,var(--uc) 55%,var(--surface));
+  background:color-mix(in srgb,var(--uc) 14%,var(--surface));
+}
+.band .ticon{font-size:3rem}
+.band h2{font-size:clamp(1.4rem,6vw,1.9rem);font-weight:800}
+.band .where{color:var(--muted);font-size:.9rem;margin-top:4px}
+.modes{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-bottom:24px}
+@media (min-width:600px){.modes{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.mode{
+  --uc:var(--u1);
+  display:flex;flex-direction:column;gap:2px;text-align:left;padding:14px 16px;border-radius:18px;min-width:0;
+  border:2px solid color-mix(in srgb,var(--uc) 55%,var(--surface));background:var(--surface);
+}
+.mode b{font-family:var(--font-display);font-size:1.2rem;font-weight:700}
+.mode span{color:var(--muted);font-size:.9rem}
+.sechead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.sechead h3{font-size:1.3rem}
+.tog{min-height:40px;padding:6px 14px;border-radius:999px;border:2px solid var(--line);background:var(--surface);font-weight:800;font-size:.9rem}
+.tog[aria-pressed="true"]{background:var(--soft);border-color:var(--fg)}
+.gname{margin:16px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px}
+.wcard{
+  display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px;min-width:0;
+  border-radius:18px;border:2px solid var(--line);background:var(--surface);
+}
+.wcard .e{font-size:2.3rem;line-height:1.1}
+.wcard .w{font-weight:800;font-size:.95rem;text-align:center;overflow-wrap:anywhere}
+
+/* Practice */
+.stop{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.bar{flex:1;height:12px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar span{display:block;height:100%;border-radius:99px;background:var(--uc,var(--primary))}
+.count{font-weight:800;font-variant-numeric:tabular-nums;color:var(--muted);min-width:3.6em;text-align:right}
+.card{
+  --uc:var(--u1);
+  display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;
+  padding:20px 16px 22px;border-radius:28px;
+  border:2px solid color-mix(in srgb,var(--uc) 55%,var(--surface));
+  background:color-mix(in srgb,var(--uc) 10%,var(--surface));
+}
+.pic{font-size:clamp(5rem,30vw,8.5rem);line-height:1.05;overflow-wrap:anywhere}
+.pic.num{font-family:var(--font-display);font-weight:800}
+.prompt{font-family:var(--font-display);font-size:clamp(1.6rem,6.5vw,2.2rem);font-weight:700;line-height:1.15;text-wrap:balance}
+.hint{color:var(--muted);font-size:1rem;max-width:30em}
+.word{
+  font-family:var(--font-display);font-size:clamp(2rem,9vw,3rem);font-weight:800;line-height:1.1;
+  padding:8px 22px;border-radius:20px;background:var(--surface);border:3px solid var(--fg);
+}
+.ans{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.achip{
+  padding:10px 16px;border-radius:16px;background:var(--surface);border:2px solid var(--fg);
+  font-family:var(--font-display);font-size:1.3rem;font-weight:700;
+}
+.row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;width:100%}
+.btn{min-height:48px;padding:10px 18px;border-radius:16px;border:2px solid var(--line);background:var(--surface);font-weight:800}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:var(--on-ok)}
+.btn.big{min-height:56px;font-size:1.1rem;padding-inline:26px}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:10px;width:100%}
+.mpic{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;min-width:0;border-radius:18px;background:var(--surface);border:2px solid var(--line)}
+.mpic[aria-pressed="true"]{border-color:var(--fg)}
+.mpic .e{font-size:2.6rem;line-height:1.1}
+.mpic .w{min-height:1.5em;font-weight:800;overflow-wrap:anywhere}
+.end .stars{font-size:3.2rem}
+.end .big-msg{font-size:clamp(1.8rem,8vw,2.6rem);font-weight:800}
+ .scene{display:block;width:min(78vw,300px);height:auto;max-width:100%}
+.wcard .scene{width:96px}
+.mpic .scene{width:84px}
+.fb{padding:10px 16px;border-radius:16px;font-weight:700;border:2px solid;max-width:100%;overflow-wrap:anywhere}
+.fb.good{background:color-mix(in srgb,var(--ok) 16%,var(--surface));border-color:var(--ok)}
+.fb.near{background:color-mix(in srgb,var(--star) 20%,var(--surface));border-color:var(--star)}
+.fb.bad{background:color-mix(in srgb,var(--primary) 12%,var(--surface));border-color:var(--primary)}
+.btn.mic{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.btn.mic:disabled{opacity:.85;cursor:default}
+@media (prefers-reduced-motion:no-preference){
+  .btn.mic:disabled{animation:listen 1s ease-in-out infinite alternate}
+  @keyframes listen{from{transform:scale(1)}to{transform:scale(1.05)}}
+}
+@media (prefers-reduced-motion:no-preference){
+  .end .stars{animation:pop .5s ease-out both}
+  @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+}
+@media (prefers-reduced-motion:reduce){.tile{transition:none}}
+</style>
+
+</head><body><div id="app"></div>
+
+<script>
+(function(){
+"use strict";
+var KEY="lec-progress-v1";
+/* MIC=true solo en la copia que se abre desde un archivo: la página publicada no tiene acceso al micrófono. */
+var MIC=true;
+
+/* Contenido tomado de la guía "Cómo acompañar el examen oral de Language en casa" (Brighter Ideas 2, unidades 1 a 6). */
+var U=[
+{icon:"🎂",title:"Why do we like birthdays?",cb:"8 a 18",ab:"6 a 15",
+ mini:"Nombrar cuatro regalos, decir una frase con his/her, responder dos preguntas sobre sentimientos y una sobre materiales.",
+ g:[
+  {n:"Regalos",i:[["🎈","balloon"],["👗","dress"],["📿","necklace"],["🎲","board game"],["⌚","watch"],["🦖","dinosaur"],["📷","camera"],["☂️","umbrella"],["🧩","jigsaw"],["🍫","chocolate"]]},
+  {n:"Sentimientos",i:[["😀","happy"],["😢","sad"],["😋","hungry"],["🥤","thirsty"],["😠","angry"],["😴","tired"]]},
+  {n:"Materiales",i:[["🏺","clay"],["🧴","plastic"],["🃏","card"],["🧶","wool"]]}],
+ qs:[
+  {q:"What's this?",e:"📷",a:["It's a camera."]},
+  {q:"Whose present is it?",e:"👧🎁",a:["This is her present."]},
+  {q:"Are you happy?",e:"😀",a:["Yes, I am.","No, I'm not."]},
+  {q:"Is she hungry?",e:"👧😋",a:["Yes, she is.","No, she isn't."]},
+  {q:"What's it made of?",e:"🧶",a:["It's made of wool."]}]},
+{icon:"🎮",title:"What's fun about games?",cb:"20 a 30",ab:"16 a 25",
+ mini:"Nombrar cinco profesiones y cuatro juguetes; responder dos preguntas con Is he/she...? y diferenciar This is / These are.",
+ g:[
+  {n:"Profesiones",i:[["👮","police officer"],["🧑‍🍳","cook"],["⚽","football player"],["🧑‍🔬","scientist"],["🦁","zoo keeper"],["🧑‍⚕️","doctor"],["👷","builder"],["🤵","waiter"],["🧑‍🌾","farmer"],["🧑‍🏫","teacher"]]},
+  {n:"Juguetes y vehículos",i:[["🚌","bus"],["🚗","car"],["🏍️","motorbike"],["🚚","lorry"],["✈️","plane"],["🚆","train"]]},
+  {n:"Sentidos",i:[["👀","see"],["👃","smell"],["👅","taste"],["✋","touch"],["👂","hear"]]}],
+ qs:[
+  {q:"Is he a farmer?",e:"👨‍🌾",a:["Yes, he is.","No, he isn't."]},
+  {q:"Is she a scientist?",e:"👩‍🔬",a:["Yes, she is.","No, she isn't."]},
+  {q:"What's this?",e:"🚗",a:["This is my car."]},
+  {q:"What are these?",e:"🚗🚗🚗",a:["These are my cars."]},
+  {q:"What can you do with your eyes?",e:"👀",a:["I can see."]}]},
+{icon:"🏘️",title:"Why are towns great?",cb:"32 a 42",ab:"26 a 35",
+ mini:"Nombrar cuatro lugares, responder una pregunta con Is there...?, otra con Are there any...? y ubicar dos lugares.",
+ g:[
+  {n:"Lugares",i:[["🏰","castle"],["🎬","cinema"],["🏛️","museum"],["🚉","station"],["🏥","hospital"],["🌳","park"],["📚","library"],["🏪","shop"],["🍽️","restaurant"],["🏊","swimming pool"]]},
+  {n:"Ubicación",note:"¿Dónde está la pelota roja? Mirá la caja azul.",i:[["svg:next","next to"],["svg:opposite","opposite"],["svg:between","between"],["svg:behind","behind"],["svg:front","in front of"],["svg:above","above"]]}],
+ qs:[
+  {q:"Is there a park?",e:"🌳",a:["Yes, there is.","No, there isn't."]},
+  {q:"Are there any shops?",e:"🏪🏪🏪",a:["Yes, there are.","No, there aren't."]},
+  {q:"Where's the hospital?",e:"🏪🏥",a:["It's next to the shop."]},
+  {q:"Where's the library?",e:"🏪↔️📚",a:["It's opposite the shop."]}]},
+{icon:"🍎",title:"How can we be healthy?",cb:"46 a 57",ab:"36 a 45",
+ mini:"Nombrar cuatro deportes, decir dos frases con I play/do/go y contestar tres preguntas con Do you...?.",
+ g:[
+  {n:"Deportes",i:[["🤾","play handball"],["🏉","play rugby"],["🏸","play badminton"],["⚾","play baseball"],["🤸","do trampolining"],["🤸‍♀️","do gymnastics"],["🏃","do athletics"],["🏊","go swimming"],["🚣","go rowing"],["🚵","go mountain biking"]]},
+  {n:"Hábitos",i:[["🍎","eat fruit"],["🍬","eat sweets"],["🥛","drink milk"],["🍋","drink lemonade"],["🏋️","do exercise"],["🌳","go outdoors"]]},
+  {n:"Cuerpo saludable",i:[["🦴","strong bones"],["💇‍♀️","shiny hair"],["🦷","good teeth"],["🧴","healthy skin"]]}],
+ qs:[
+  {q:"Do you play handball?",e:"🤾",a:["Yes, I do.","No, I don't."]},
+  {q:"Do you drink milk?",e:"🥛",a:["Yes, I do.","No, I don't."]},
+  {q:"What sports do you do?",e:"🏊🤸🏃",a:["I go swimming.","I do gymnastics."]},
+  {q:"Do you eat fruit?",e:"🍎",a:["Yes, I do.","No, I don't."]}]},
+{icon:"🦒",title:"Why are animals amazing?",cb:"58 a 69",ab:"46 a 55",
+ mini:"Nombrar cinco animales, describir dos y responder dos preguntas sobre dónde viven o qué comen.",
+ g:[
+  {n:"Animales",i:[["🦓","zebra"],["🦒","giraffe"],["🐘","elephant"],["🐒","monkey"],["🦁","lion"],["🐊","crocodile"],["🦛","hippo"],["🐧","penguin"],["🐋","whale"],["🦈","shark"]]},
+  {n:"Descripciones",i:[["🐘","big"],["🐭","small"],["🐍","long"],["🦒","tall"]]},
+  {n:"Hábitats y acciones",i:[["🌊","in water"],["🌳","in trees"],["🏞️","on land"],["🌿","eat grass"],["💧","drink water"],["🌙🌳","sleep in a tree"],["🐧🐧🐧","live in a group"],["🦁🐗","hunt animals"]]}],
+ qs:[
+  {q:"What animal is it?",e:"🦒",a:["It's a giraffe."]},
+  {q:"Does it live in water?",e:"🐋",a:["Yes, it does.","No, it doesn't."]},
+  {q:"Do they live in groups?",e:"🐧🐧🐧",a:["Yes, they do.","No, they don't."]},
+  {q:"Does it eat grass?",e:"🦓",a:["Yes, it does.","No, it doesn't."]}]},
+{icon:"🏫",title:"What do we do at school?",cb:"70 a 81",ab:"56 a 65",
+ mini:"Nombrar cinco materias, decir qué está haciendo uno mismo y qué están haciendo dos personajes usando -ing.",
+ g:[
+  {n:"Materias",i:[["🏃","PE"],["💻","ICT"],["➗","maths"],["🔤","English"],["🌍","geography"],["🔬","science"],["🎭","drama"],["🎨","art"],["🎵","music"],["📜","history"]]},
+  {n:"Actividades",i:[["🎧","listen to music"],["🚀","learn about space"],["✍️","write a story"],["🖍️","draw"],["👑","dress up"],["⚽","do sport"],["🎤","sing"]]},
+  {n:"Números de diez en diez",i:[["10","ten"],["20","twenty"],["30","thirty"],["40","forty"],["50","fifty"],["60","sixty"],["70","seventy"],["80","eighty"],["90","ninety"],["100","one hundred"]]}],
+ qs:[
+  {q:"What subject is it?",e:"🔬",a:["It's science."]},
+  {q:"What are you doing?",e:"🖍️",a:["I'm drawing."]},
+  {q:"Are you doing maths?",e:"➗",a:["Yes, I am.","No, I'm not."]},
+  {q:"What's he doing?",e:"👦✍️",a:["He's writing."]},
+  {q:"What's she doing?",e:"👧🎤",a:["She's singing."]}]}
+];
+
+/* Simulacro integrador (guía, página 9). */
+var SIM1=[
+ {p:"Name three birthday presents.",u:0,g:0,n:3},
+ {p:"What jobs can you see?",u:1,g:0,n:4},
+ {p:"Name four places in town.",u:2,g:0,n:4},
+ {p:"What sports can you see?",u:3,g:0,n:4},
+ {p:"Name three wild animals.",u:4,g:0,n:3},
+ {p:"What school subjects can you see?",u:5,g:0,n:5}];
+var SIM2=[
+ {q:"Are you hungry?",e:"😋",a:["Yes, I am.","No, I'm not."]},
+ {q:"Is she a doctor?",e:"👩‍⚕️",a:["Yes, she is.","No, she isn't."]},
+ {q:"Is there a cinema?",e:"🎬",a:["Yes, there is.","No, there isn't."]},
+ {q:"Do you play rugby?",e:"🏉",a:["Yes, I do.","No, I don't."]},
+ {q:"Does it live in water?",e:"🐋",a:["Yes, it does.","No, it doesn't."]},
+ {q:"What's he/she doing?",e:"👦✍️ 👧🎤",a:["He's writing.","She's singing."]}];
+
+var progress={};
+try{progress=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){progress={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(progress))}catch(e){}}
+
+var app=document.getElementById("app");
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+var S={view:"home",unit:null,sess:null,slow:false,voiceOk:("speechSynthesis" in window),micOk:!!SR,micDead:false,listening:false};
+
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function starsHtml(n){return '<span class="stars" role="img" aria-label="'+n+' de 3 estrellas">'+"★".repeat(n)+'<span class="off">'+"★".repeat(3-n)+"</span></span>"}
+
+/* Dibujos de ubicación: la pelota roja es lo que se busca, la caja azul es la referencia. */
+var SCENES={
+  next:'<rect x="12" y="46" width="40" height="34" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="74" cy="64" r="16" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/>',
+  opposite:'<rect x="4" y="36" width="112" height="24" fill="var(--line)"/><line x1="8" y1="48" x2="112" y2="48" stroke="var(--muted)" stroke-width="2.5" stroke-dasharray="8 6"/><rect x="40" y="4" width="40" height="26" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="60" cy="76" r="12" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/>',
+  between:'<rect x="6" y="48" width="32" height="32" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="60" cy="64" r="14" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/><rect x="82" y="48" width="32" height="32" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/>',
+  behind:'<circle cx="60" cy="42" r="20" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/><rect x="26" y="50" width="68" height="30" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/>',
+  front:'<rect x="26" y="16" width="68" height="46" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="60" cy="62" r="17" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/>',
+  above:'<rect x="30" y="56" width="60" height="24" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="60" cy="24" r="14" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/>'
+};
+function picHtml(e){
+  if(e.indexOf("svg:")!==0)return e;
+  var k=e.slice(4),ground=k==="opposite"?"":'<line x1="6" y1="82" x2="114" y2="82" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/>';
+  return '<svg class="scene" viewBox="0 0 120 90" aria-hidden="true">'+ground+SCENES[k]+'</svg>';
+}
+
+/* Voz: usa la voz en inglés del dispositivo (preferencia británica, como el libro). */
+var voice=null,voices=[];
+var VK="lec-voice-v1",pref={name:"",rate:0.7};
+try{var pv=JSON.parse(localStorage.getItem(VK)||"{}");if(pv&&typeof pv==="object"){pref.name=pv.name||"";if(pv.rate)pref.rate=+pv.rate}}catch(e){}
+function savePref(){try{localStorage.setItem(VK,JSON.stringify(pref))}catch(e){}}
+function pickVoice(){
+  if(!S.voiceOk)return;
+  try{
+    var all=speechSynthesis.getVoices().filter(function(v){return /^en/i.test(v.lang)});
+    /* Solo las dos voces elegidas. Si el aparato no tiene ninguna, se ofrecen todas las voces en inglés. */
+    voices=all.filter(function(v){return /martha|google uk english male/i.test(v.name)});
+    if(!voices.length)voices=all;
+    voices.sort(function(x,y){
+      var sx=(/google|natural|premium|enhanced|neural/i.test(x.name)?2:0)+(/^en[-_]GB$/i.test(x.lang)?1:0);
+      var sy=(/google|natural|premium|enhanced|neural/i.test(y.name)?2:0)+(/^en[-_]GB$/i.test(y.lang)?1:0);
+      return sy-sx;
+    });
+    voice=voices.filter(function(v){return v.name===pref.name})[0]||voices[0]||null;
+  }catch(e){}
+}
+if(S.voiceOk){pickVoice();try{speechSynthesis.addEventListener("voiceschanged",function(){pickVoice();if(S.view==="home")render()})}catch(e){}}
+var FIX={"PE":"P E","ICT":"I C T"};
+function say(t,slow){
+  if(!S.voiceOk)return;
+  try{
+    speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(FIX[t]||t);
+    u.lang=voice?voice.lang:"en-GB";
+    if(voice)u.voice=voice;
+    u.rate=slow?Math.max(0.4,pref.rate-0.2):pref.rate;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+function hearBtns(t){
+  var d=esc(encodeURIComponent(t));
+  return '<button class="btn" data-act="say" data-t="'+d+'">🔊 Escuchar</button>'+
+         '<button class="btn" data-act="say" data-slow="1" data-t="'+d+'">🐢 Despacio</button>';
+}
+
+/* Vistas */
+function voicePanel(){
+  if(!S.voiceOk||!voices.length)return "";
+  var opts=voices.map(function(v,i){
+    return '<option value="'+esc(v.name)+'"'+(voice&&v.name===voice.name?' selected':'')+'>'+esc(v.name)+' ('+esc(v.lang)+')</option>';
+  }).join("");
+  var rates=[["0.85","Normal"],["0.7","Lenta"],["0.55","Muy lenta"]].map(function(r){
+    return '<option value="'+r[0]+'"'+(Math.abs(pref.rate-(+r[0]))<0.01?' selected':'')+'>'+r[1]+'</option>';
+  }).join("");
+  return '<section class="note vp"><h3>Voz</h3>'+
+    '<p class="hint" style="margin-bottom:10px">Si no se entiende, probá otra voz o una velocidad más lenta.</p>'+
+    '<div class="vrow"><label for="vsel">Voz</label><select id="vsel" data-sel="voice">'+opts+'</select></div>'+
+    '<div class="vrow"><label for="rsel">Velocidad</label><select id="rsel" data-sel="rate">'+rates+'</select></div>'+
+    '<button class="btn" data-act="say" data-t="'+esc(encodeURIComponent("Hello! What's this? It's a giraffe."))+'">🔊 Probar voz</button></section>';
+}
+function homeView(){
+  var tiles=U.map(function(u,i){
+    return '<button class="tile" style="--uc:var(--u'+(i+1)+')" data-act="unit" data-u="'+i+'">'+
+      '<span class="ticon" aria-hidden="true">'+u.icon+'</span>'+
+      '<span class="tnum">Unidad '+(i+1)+'</span>'+
+      '<span class="ttitle">'+esc(u.title)+'</span>'+
+      starsHtml(progress["u"+(i+1)]||0)+'</button>';
+  }).join("");
+  var sim='<button class="tile sim" style="--uc:var(--primary)" data-act="start" data-m="sim" data-u="-1">'+
+    '<span class="ticon" aria-hidden="true">🎤</span>'+
+    '<span class="tbody"><span class="tnum">Unidades 1 a 6</span><span class="ttitle">Simulacro del oral</span>'+
+    '<span class="tsub">12 preguntas mezcladas, como en el examen.</span></span>'+
+    starsHtml(progress.sim||0)+'</button>';
+  return '<header class="top"><p class="eyebrow">Segundo grado · Brighter Ideas 2</p>'+
+    '<h1 data-focus>Language en casa</h1>'+
+    '<p class="lead">Elegí una unidad. Mirá, escuchá y repetí en voz alta.</p></header>'+
+    '<div class="tiles">'+tiles+sim+'</div>'+
+    voicePanel()+'<section class="note"><h3>Para el adulto que acompaña</h3><ul>'+
+    '<li>Sesiones de 10 a 15 minutos, varias veces por semana.</li>'+
+    '<li>Esperen unos segundos antes de ayudar. Una pista sirve más que la respuesta.</li>'+
+    '<li>Acá no se puede grabar la voz. Escuchen cómo lo dice y celebren cada intento.</li>'+
+    '</ul></section>';
+}
+
+function unitView(){
+  var i=S.unit,u=U[i],uc="var(--u"+(i+1)+")";
+  var groups=u.g.map(function(g){
+    return '<h3 class="gname eyebrow">'+esc(g.n)+'</h3>'+(g.note?'<p class="hint" style="color:var(--muted);margin-bottom:8px">'+esc(g.note)+'</p>':'')+'<div class="grid">'+g.i.map(function(it){
+      var num=/^\d/.test(it[0]);
+      return '<button class="wcard" data-act="say" data-grid="1" data-t="'+esc(encodeURIComponent(it[1]))+'" aria-label="Escuchar '+esc(it[1])+'">'+
+        '<span class="e" aria-hidden="true"'+(num?' style="font-family:var(--font-display);font-weight:800"':'')+'>'+picHtml(it[0])+'</span>'+
+        '<span class="w">'+esc(it[1])+'</span></button>';
+    }).join("")+'</div>';
+  }).join("");
+  return '<div class="uhead"><button class="back" data-act="home">← Inicio</button></div>'+
+    '<div class="band" style="--uc:'+uc+'"><span class="ticon" aria-hidden="true">'+u.icon+'</span><div>'+
+    '<p class="eyebrow">Unidad '+(i+1)+'</p><h2 data-focus>'+esc(u.title)+'</h2>'+
+    '<p class="where">Class Book, páginas '+u.cb+' · Activity Book, páginas '+u.ab+'</p></div></div>'+
+    '<div class="modes" style="--uc:'+uc+'">'+
+    '<button class="mode" data-act="start" data-m="vocab" data-u="'+i+'"><b>Mirar y nombrar</b><span>Mirá el dibujo y decí la palabra.</span></button>'+
+    '<button class="mode" data-act="start" data-m="qa" data-u="'+i+'"><b>Preguntas</b><span>Escuchá la pregunta y respondé con una frase.</span></button>'+
+    '<button class="mode" data-act="start" data-m="mini" data-u="'+i+'"><b>Mini oral</b><span>'+esc(u.mini)+'</span></button></div>'+
+    '<div class="sechead"><h3>Palabras de la unidad</h3>'+
+    '<button class="tog" data-act="slowtoggle" aria-pressed="'+S.slow+'">🐢 Voz lenta</button></div>'+
+    '<p class="hint" style="color:var(--muted)">Tocá un dibujo para escuchar cómo se dice.</p>'+groups;
+}
+
+function marks(){
+  return '<div class="row"><button class="btn ok big" data-act="done">¡Lo dije!</button>'+
+         '<button class="btn big" data-act="again">Otra vez</button></div>';
+}
+
+/* Reconocimiento de voz (solo en la copia con micrófono) */
+var NUM={"10":"ten","20":"twenty","30":"thirty","40":"forty","50":"fifty","60":"sixty","70":"seventy","80":"eighty","90":"ninety","100":"one hundred"};
+var TOK={im:"i am",its:"it is",whats:"what is",hes:"he is",shes:"she is",isnt:"is not",doesnt:"does not",dont:"do not",arent:"are not",theres:"there is",wheres:"where is"};
+var STOP={a:1,an:1,the:1};
+function nz(t){
+  t=String(t).toLowerCase().replace(/[’‘`]/g,"'").replace(/'/g,"").replace(/[^a-z0-9 ]+/g," ").replace(/\s+/g," ").trim();
+  if(!t)return [];
+  return t.split(" ").map(function(w){return NUM[w]||TOK[w]||w}).join(" ").split(" ").filter(function(w){return w&&!STOP[w]});
+}
+function lev(a,b){
+  var d=[],i,j;
+  for(i=0;i<=a.length;i++){d[i]=[i]}
+  for(j=1;j<=b.length;j++){d[0][j]=j}
+  for(i=1;i<=a.length;i++)for(j=1;j<=b.length;j++){
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  }
+  return d[a.length][b.length];
+}
+function scoreOf(target,heard){
+  var T=nz(target),H=nz(heard);
+  if(!T.length||!H.length)return 0;
+  if(T.join("")===H.join(""))return 1;
+  if((" "+H.join(" ")+" ").indexOf(" "+T.join(" ")+" ")>-1)return 1;
+  var f=0;
+  T.forEach(function(w){if(H.some(function(x){return x===w||(w.length>=6&&lev(x,w)<=1)}))f++});
+  return f/T.length;
+}
+function bestScore(targets,alts){
+  var best=0;
+  targets.forEach(function(t){alts.forEach(function(h){var sc=scoreOf(t,h);if(sc>best)best=sc})});
+  return best;
+}
+function errMsg(code){
+  if(code==="not-allowed"||code==="service-not-allowed")return "No tengo permiso para usar el micrófono. Permitilo en el navegador (candado de la barra de direcciones) y recargá la página.";
+  if(code==="no-speech")return "No te escuché. Probá de nuevo, más cerca del micrófono.";
+  if(code==="audio-capture")return "No encuentro el micrófono. Revisá que esté conectado.";
+  if(code==="network")return "Para reconocer la voz hace falta internet.";
+  return "No pude escucharte. Probá de nuevo.";
+}
+function finishListen(st,alts){
+  var heard=alts[0]||"",hq="«"+esc(heard)+"»";
+  if(st.k==="many"){
+    st.found=st.found||[];st.rev=st.rev||[];
+    st.e.forEach(function(it,j){
+      if(st.found.indexOf(j)>-1)return;
+      if(bestScore([it[1]],alts)>=0.75){st.found.push(j);if(st.rev.indexOf(j)<0)st.rev.push(j)}
+    });
+    var names=st.found.map(function(j){return esc(st.e[j][1])}).join(", ");
+    if(st.found.length>=st.n)st.res={kind:"ok",msg:"✔ ¡Muy bien! Dijiste: "+names+"."};
+    else if(st.found.length>0)st.res={kind:"near",msg:"Bien, ya dijiste "+st.found.length+" de "+st.n+": "+names+". Decí otra más."};
+    else st.res={kind:"bad",msg:"No encontré ninguna palabra de los dibujos. Escuché "+hq+". Probá de nuevo."};
+    return;
+  }
+  var sc=bestScore(st.k==="name"?[st.w]:st.a,alts);
+  st.tries=(st.tries||0)+1;
+  if(sc>=0.75)st.res={kind:"ok",msg:"✔ ¡Muy bien! Escuché "+hq+"."};
+  else if(sc>=0.4)st.res={kind:"near",msg:"Casi. Escuché "+hq+". Probá decir la frase completa."};
+  else st.res={kind:"bad",msg:"✖ Escuché "+hq+". Probá otra vez."};
+  if(sc<0.75&&st.tries>=2&&!S.sess.shown){S.sess.shown=true;st.peeked=true}
+}
+function listen(){
+  var s=S.sess,st=s&&s.steps[s.i];
+  if(!st||S.listening||!SR)return;
+  try{speechSynthesis.cancel()}catch(e){}
+  var r=new SR(),got=false;
+  r.lang="en-GB";r.interimResults=false;r.maxAlternatives=5;
+  S.listening=true;render();
+  r.onresult=function(ev){
+    got=true;var alts=[],res=ev.results[0];
+    for(var i=0;i<res.length;i++)alts.push(res[i].transcript);
+    S.listening=false;finishListen(st,alts);render();
+  };
+  r.onerror=function(ev){
+    got=true;S.listening=false;
+    if(ev.error==="not-allowed"||ev.error==="service-not-allowed")S.micDead=true;
+    st.res={kind:"bad",msg:errMsg(ev.error)};render();
+  };
+  r.onend=function(){
+    if(!got){S.listening=false;st.res={kind:"bad",msg:errMsg("no-speech")};render()}
+  };
+  try{r.start()}catch(e){S.listening=false;render()}
+}
+function micOn(){return MIC&&S.micOk&&!S.micDead}
+function micBtn(label){
+  return S.listening
+    ? '<button class="btn mic big" disabled>🎤 Escuchando…</button>'
+    : '<button class="btn mic big" data-act="listen">🎤 '+label+'</button>';
+}
+function fbHtml(st){
+  var r=st.res;if(!r)return "";
+  return '<div class="fb '+(r.kind==="ok"?"good":r.kind==="near"?"near":"bad")+'" role="status">'+r.msg+'</div>';
+}
+function nextBtn(){return '<div class="row"><button class="btn ok big" data-act="done">Siguiente →</button></div>'}
+
+function sessionView(){
+  var s=S.sess,st=s.steps[s.i],pct=Math.round(s.i/s.steps.length*100),body="",mic=micOn();
+  if(st.k==="name"){
+    var sv=st.e.indexOf("svg:")===0,num=/^\d/.test(st.e);
+    var wordBtn='<button class="word" data-act="say" data-t="'+esc(encodeURIComponent(st.w))+'">'+esc(st.w)+'</button>';
+    body='<p class="eyebrow">'+(st.retry?"Probemos otra vez":"Mirá y nombrá")+'</p>'+
+      '<div class="pic'+(num?" num":"")+'" aria-hidden="true">'+picHtml(st.e)+'</div>'+
+      '<p class="prompt">'+(sv?"Where's the ball?":num?"What number is it?":"What's this?")+'</p>';
+    if(mic){
+      if(st.res&&st.res.kind==="ok")body+=fbHtml(st)+wordBtn+'<div class="row">'+hearBtns(st.w)+'</div>'+nextBtn();
+      else if(s.shown)body+=fbHtml(st)+wordBtn+'<p class="hint">Escuchá cómo se dice y repetilo en voz alta.</p><div class="row">'+hearBtns(st.w)+'</div><div class="row">'+micBtn("Repetilo")+'<button class="btn big" data-act="again">Seguir</button></div>';
+      else body+=fbHtml(st)+'<p class="hint">Apretá el micrófono y decí la palabra en voz alta.</p><div class="row">'+micBtn("Decilo")+'<button class="btn big" data-act="reveal">Ver palabra</button></div>';
+    }else if(s.shown){
+      body+=wordBtn+'<p class="hint">Escuchá y repetí en voz alta.</p><div class="row">'+hearBtns(st.w)+'</div>'+marks();
+    }else{
+      body+='<p class="hint">Decí la palabra en voz alta. Después tocá para ver si coincide.</p>'+
+        '<button class="btn primary big" data-act="reveal">Ver palabra</button>';
+    }
+  }else if(st.k==="ask"){
+    var chips='<div class="ans">'+st.a.map(function(a){return '<button class="achip" data-act="say" data-t="'+esc(encodeURIComponent(a))+'">'+esc(a)+'</button>'}).join("")+'</div>';
+    body='<p class="eyebrow">'+(st.retry?"Probemos otra vez":"Escuchá y respondé")+'</p>'+
+      '<div class="pic" aria-hidden="true">'+st.e+'</div>'+
+      '<p class="prompt">'+esc(st.q)+'</p>'+
+      '<div class="row">'+hearBtns(st.q)+'</div>';
+    if(mic){
+      if(st.res&&st.res.kind==="ok")body+=fbHtml(st)+nextBtn();
+      else if(s.shown)body+=fbHtml(st)+'<p class="hint">Así se puede responder. Tocá una frase para escucharla y repetila.</p>'+chips+'<div class="row">'+micBtn("Repetila")+'<button class="btn big" data-act="again">Seguir</button></div>';
+      else body+=fbHtml(st)+'<p class="hint">Apretá el micrófono y respondé con una frase.</p><div class="row">'+micBtn("Respondé")+'<button class="btn big" data-act="reveal">Ver respuesta</button></div>';
+    }else if(s.shown){
+      body+='<p class="hint">Así se puede responder. Tocá una frase para escucharla y repetila en voz alta.</p>'+chips+marks();
+    }else{
+      body+='<p class="hint">Pensá la respuesta y decila en voz alta.</p>'+
+        '<button class="btn primary big" data-act="reveal">Ver respuesta</button>';
+    }
+  }else{
+    var rev=st.rev||[];
+    body='<p class="eyebrow">'+(st.retry?"Probemos otra vez":"Mirá y nombrá")+'</p>'+
+      '<p class="prompt">'+esc(st.p)+'</p><div class="row">'+hearBtns(st.p)+'</div>'+
+      '<div class="mgrid">'+st.e.map(function(it,j){
+        var on=rev.indexOf(j)>-1;
+        return '<button class="mpic" data-act="flip" data-j="'+j+'" aria-pressed="'+on+'">'+
+          '<span class="e" aria-hidden="true">'+picHtml(it[0])+'</span><span class="w">'+(on?esc(it[1]):"")+'</span></button>';
+      }).join("")+'</div>';
+    if(mic){
+      body+=fbHtml(st)+'<p class="hint">Decí los nombres de los dibujos en voz alta, seguidos. Tocá un dibujo si necesitás ayuda.</p>';
+      body+=(st.found&&st.found.length>=st.n)?nextBtn():'<div class="row">'+micBtn("Decilos")+'<button class="btn big" data-act="again">Seguir</button></div>';
+    }else{
+      body+='<p class="hint">Nombrá los dibujos en voz alta. Tocá un dibujo para ver y escuchar la palabra.</p>'+marks();
+    }
+  }
+  return '<div class="stop" style="--uc:'+s.color+'"><button class="back" data-act="quit">✕ Salir</button>'+
+    '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><span style="width:'+pct+'%"></span></div>'+
+    '<span class="count">'+(s.i+1)+' / '+s.steps.length+'</span></div>'+
+    '<h2 class="eyebrow" data-focus style="margin-bottom:10px">'+esc(s.title)+'</h2>'+
+    '<div class="card" style="--uc:'+s.color+'">'+body+'</div>';
+}
+
+function endView(){
+  var s=S.sess,n=s.n;
+  var msg=n===3?"¡Excelente!":n===2?"¡Muy bien!":"¡Bien por intentarlo!";
+  var sub=n===3?"Lo dijiste casi todo a la primera.":n===2?"Con un poco más de práctica sale todo.":"Probá de nuevo otro día. Cada intento suma.";
+  return '<div class="card end" style="--uc:'+s.color+'">'+
+    '<p class="eyebrow" data-focus>'+esc(s.title)+'</p>'+starsHtml(n)+
+    '<h2 class="big-msg">'+msg+'</h2>'+
+    '<p class="hint">'+sub+' Dijiste '+s.ok+' de '+s.total+' a la primera.</p>'+
+    '<div class="row"><button class="btn primary big" data-act="restart">Practicar otra vez</button>'+
+    '<button class="btn big" data-act="quit">Volver</button></div></div>';
+}
+
+function render(){
+  var h=S.view==="home"?homeView():S.view==="unit"?unitView():S.view==="session"?sessionView():endView();
+  var warn=S.voiceOk?"":'<p class="warn">Este navegador no puede reproducir voz en inglés. Pidan ayuda a un adulto para escuchar cada palabra.</p>';
+  if(MIC&&!S.micOk)warn+='<p class="warn">Para que la app escuche la voz, abrila en Chrome o Edge. Mientras tanto se practica escuchando y repitiendo.</p>';
+  if(MIC&&S.micDead)warn+='<p class="warn">No tengo permiso para usar el micrófono. Permitilo en el navegador y recargá la página.</p>';
+  app.innerHTML='<div class="wrap">'+warn+h+'</div>';
+  var f=app.querySelector("[data-focus]");
+  if(f){f.setAttribute("tabindex","-1");try{f.focus({preventScroll:true})}catch(e){}}
+}
+function go(){render();window.scrollTo(0,0)}
+
+/* Sesiones de práctica */
+function poolOf(u){var out=[];u.g.forEach(function(g){if(!g.np)out=out.concat(g.i)});return out}
+function nameSteps(items){return items.map(function(it){return {k:"name",e:it[0],w:it[1]}})}
+function askSteps(qs){return shuffle(qs).map(function(q){return {k:"ask",q:q.q,e:q.e,a:q.a}})}
+
+function start(mode,ui){
+  var steps,title,key,color;
+  if(mode==="sim"){
+    steps=shuffle(SIM1).map(function(r){
+      var items=U[r.u].g[r.g].i;
+      return {k:"many",p:r.p,n:r.n,e:shuffle(items).slice(0,Math.min(items.length,r.n+2)),rev:[],found:[]};
+    }).concat(askSteps(SIM2));
+    title="Simulacro · Unidades 1 a 6";key="sim";color="var(--primary)";
+  }else{
+    var u=U[ui];color="var(--u"+(ui+1)+")";key="u"+(ui+1);
+    if(mode==="vocab"){steps=nameSteps(shuffle(poolOf(u)).slice(0,12));title="Unidad "+(ui+1)+" · Mirar y nombrar"}
+    else if(mode==="qa"){steps=askSteps(u.qs);title="Unidad "+(ui+1)+" · Preguntas"}
+    else{steps=nameSteps(shuffle(poolOf(u)).slice(0,4)).concat(askSteps(u.qs));title="Unidad "+(ui+1)+" · Mini oral"}
+  }
+  S.sess={steps:steps,i:0,ok:0,total:steps.length,key:key,title:title,color:color,shown:false,mode:mode,u:ui,n:0};
+  S.view="session";go();speakEntry();
+}
+function speakEntry(){
+  var s=S.sess;if(!s||S.view!=="session")return;
+  var st=s.steps[s.i];
+  if(st.k==="ask")say(st.q);else if(st.k==="many")say(st.p);
+}
+function advance(ok){
+  var s=S.sess,st=s.steps[s.i];
+  if(ok){if(!st.retry&&!st.peeked)s.ok++}
+  else if(!st.retry){var c={};for(var k in st)c[k]=st[k];c.retry=true;c.rev=[];c.found=[];c.res=null;c.tries=0;c.peeked=false;s.steps.push(c)}
+  s.i++;s.shown=false;
+  if(s.i>=s.steps.length){
+    var r=s.ok/s.total;
+    s.n=r>=0.9?3:r>=0.6?2:1;
+    progress[s.key]=Math.max(progress[s.key]||0,s.n);save();
+    S.view="end";go();return;
+  }
+  go();speakEntry();
+}
+
+document.addEventListener("change",function(e){
+  var t=e.target;if(!t||!t.dataset||!t.dataset.sel)return;
+  if(t.dataset.sel==="voice"){pref.name=t.value;pickVoice()}
+  else pref.rate=+t.value;
+  savePref();say("Hello! What's this? It's a giraffe.");
+});
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-act]");if(!b)return;
+  var a=b.dataset.act,s=S.sess,st=s&&s.steps[s.i];
+  if(a==="say"){say(decodeURIComponent(b.dataset.t),b.dataset.slow==="1"||(b.dataset.grid==="1"&&S.slow));return}
+  if(a==="slowtoggle"){S.slow=!S.slow;render();return}
+  if(a==="home"){S.view="home";go();return}
+  if(a==="unit"){S.unit=+b.dataset.u;S.view="unit";go();return}
+  if(a==="start"){start(b.dataset.m,+b.dataset.u);return}
+  if(a==="restart"){start(s.mode,s.u);return}
+  if(a==="quit"){if(s&&s.u>=0){S.unit=s.u;S.view="unit"}else{S.view="home"}go();return}
+  if(!st)return;
+  if(a==="listen"){listen();return}
+  if(a==="reveal"){s.shown=true;if(micOn())st.peeked=true;render();say(st.k==="name"?st.w:st.a[0]);return}
+  if(a==="flip"){
+    var j=+b.dataset.j;st.rev=st.rev||[];
+    var at=st.rev.indexOf(j);
+    if(at>-1)st.rev.splice(at,1);else st.rev.push(j);
+    render();say(st.e[j][1]);return;
+  }
+  if(a==="done"){advance(true);return}
+  if(a==="again"){advance(false);return}
+});
+
+render();
+})();
+</script>
+</body></html>
