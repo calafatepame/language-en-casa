@@ -109,6 +109,8 @@ button:focus-visible,h1:focus-visible,h2:focus-visible{outline:3px solid var(--p
   border-radius:18px;border:2px solid var(--line);background:var(--surface);
 }
 .wcard .e{font-size:2.3rem;line-height:1.1}
+.wcard .e.p2{font-size:1.9rem}
+.wcard .e.p3{font-size:1.45rem}
 .wcard .w{font-weight:800;font-size:.95rem;text-align:center;overflow-wrap:anywhere}
 
 /* Practice */
@@ -125,6 +127,17 @@ button:focus-visible,h1:focus-visible,h2:focus-visible{outline:3px solid var(--p
 }
 .pic{font-size:clamp(5rem,30vw,8.5rem);line-height:1.05;overflow-wrap:anywhere}
 .pic.num{font-family:var(--font-display);font-weight:800}
+.pic.p2{font-size:clamp(3.6rem,20vw,6.4rem)}
+.pic.p3{font-size:clamp(2.6rem,14vw,4.8rem)}
+.topic{display:inline-block;max-width:100%;padding:6px 16px;border-radius:999px;font-family:var(--font-display);font-weight:700;font-size:1.2rem;line-height:1.2;color:var(--fg);
+  background:color-mix(in srgb,var(--uc) 22%,var(--surface));border:2px solid color-mix(in srgb,var(--uc) 70%,var(--surface))}
+.kind{display:inline-flex;align-items:center;gap:6px;max-width:100%;padding:6px 14px;border-radius:12px;font-weight:800;font-size:.95rem;border:2px solid var(--fg)}
+.kind.word{background:var(--surface);color:var(--fg)}
+.kind.phrase{background:var(--fg);color:var(--bg)}
+.blank{max-width:100%;white-space:pre-wrap;overflow-wrap:anywhere;text-align:center;padding:10px 22px;border-radius:20px;border:3px dashed var(--muted);font-family:var(--font-display);font-size:clamp(1.6rem,7vw,2.4rem);font-weight:800;line-height:1.1;color:var(--muted);letter-spacing:.14em}
+.frame{font-family:var(--font-display);font-size:clamp(1.3rem,5.5vw,1.8rem);font-weight:700;line-height:1.6;text-wrap:balance}
+.gap{display:inline-block;letter-spacing:.14em;margin-inline:.15em;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+.mode .tp{font-weight:800;font-size:.82rem;color:var(--fg)}
 .prompt{font-family:var(--font-display);font-size:clamp(1.6rem,6.5vw,2.2rem);font-weight:700;line-height:1.15;text-wrap:balance}
 .hint{color:var(--muted);font-size:1rem;max-width:30em}
 .word{
@@ -145,6 +158,8 @@ button:focus-visible,h1:focus-visible,h2:focus-visible{outline:3px solid var(--p
 .mpic{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;min-width:0;border-radius:18px;background:var(--surface);border:2px solid var(--line)}
 .mpic[aria-pressed="true"]{border-color:var(--fg)}
 .mpic .e{font-size:2.6rem;line-height:1.1}
+.mpic .e.p2{font-size:2.1rem}
+.mpic .e.p3{font-size:1.6rem}
 .mpic .w{min-height:1.5em;font-weight:800;overflow-wrap:anywhere}
 .end .stars{font-size:3.2rem}
 .end .big-msg{font-size:clamp(1.8rem,8vw,2.6rem);font-weight:800}
@@ -183,14 +198,14 @@ var U=[
  mini:"Nombrar cuatro regalos, decir una frase con his/her, responder dos preguntas sobre sentimientos y una sobre materiales.",
  g:[
   {n:"Regalos",i:[["🎈","balloon"],["👗","dress"],["📿","necklace"],["🎲","board game"],["⌚","watch"],["🦖","dinosaur"],["📷","camera"],["☂️","umbrella"],["🧩","jigsaw"],["🍫","chocolate"]]},
-  {n:"Sentimientos",i:[["😀","happy"],["😢","sad"],["😋","hungry"],["🥤","thirsty"],["😠","angry"],["😴","tired"]]},
-  {n:"Materiales",i:[["🏺","clay"],["🧴","plastic"],["🃏","card"],["🧶","wool"]]}],
+  {n:"Sentimientos",i:[["😀","happy"],["😢","sad"],["😋","hungry"],["🥵🥤","thirsty"],["😠","angry"],["😴","tired"]]},
+  {n:"Materiales",i:[["🏺","clay"],["🧴","plastic"],["💳","card"],["🧶","wool"]]}],
  qs:[
-  {q:"What's this?",e:"📷",a:["It's a camera."]},
-  {q:"Whose present is it?",e:"👧🎁",a:["This is her present."]},
-  {q:"Are you happy?",e:"😀",a:["Yes, I am.","No, I'm not."]},
-  {q:"Is she hungry?",e:"👧😋",a:["Yes, she is.","No, she isn't."]},
-  {q:"What's it made of?",e:"🧶",a:["It's made of wool."]}]},
+  {q:"What's this?",t:"Regalos",f:"It's a ____.",e:"📷",a:["It's a camera."]},
+  {q:"Whose present is it?",t:"Regalos",f:"This is ____ present.",e:"👧🎁",a:["This is her present."]},
+  {q:"Are you happy?",t:"Sentimientos",f:"Yes, I ____. / No, I'm ____.",e:"😀",a:["Yes, I am.","No, I'm not."]},
+  {q:"Is she hungry?",t:"Sentimientos",f:"Yes, she ____. / No, she ____.",e:"👧😋",a:["Yes, she is.","No, she isn't."]},
+  {q:"What's it made of?",t:"Materiales",f:"It's made of ____.",e:"🧶",a:["It's made of wool."]}]},
 {icon:"🎮",title:"What's fun about games?",cb:"20 a 30",ab:"16 a 25",
  mini:"Nombrar cinco profesiones y cuatro juguetes; responder dos preguntas con Is he/she...? y diferenciar This is / These are.",
  g:[
@@ -198,43 +213,43 @@ var U=[
   {n:"Juguetes y vehículos",i:[["🚌","bus"],["🚗","car"],["🏍️","motorbike"],["🚚","lorry"],["✈️","plane"],["🚆","train"]]},
   {n:"Sentidos",i:[["👀","see"],["👃","smell"],["👅","taste"],["✋","touch"],["👂","hear"]]}],
  qs:[
-  {q:"Is he a farmer?",e:"👨‍🌾",a:["Yes, he is.","No, he isn't."]},
-  {q:"Is she a scientist?",e:"👩‍🔬",a:["Yes, she is.","No, she isn't."]},
-  {q:"What's this?",e:"🚗",a:["This is my car."]},
-  {q:"What are these?",e:"🚗🚗🚗",a:["These are my cars."]},
-  {q:"What can you do with your eyes?",e:"👀",a:["I can see."]}]},
+  {q:"Is he a farmer?",t:"Profesiones",f:"Yes, he ____. / No, he ____.",e:"👨‍🌾",a:["Yes, he is.","No, he isn't."]},
+  {q:"Is she a scientist?",t:"Profesiones",f:"Yes, she ____. / No, she ____.",e:"👩‍🔬",a:["Yes, she is.","No, she isn't."]},
+  {q:"What's this?",t:"Juguetes y vehículos",f:"This is my ____.",e:"🚗",a:["This is my car."]},
+  {q:"What are these?",t:"Juguetes y vehículos",f:"These are my ____.",e:"🚗🚗🚗",a:["These are my cars."]},
+  {q:"What can you do with your eyes?",t:"Sentidos",f:"I can ____.",e:"👀",a:["I can see."]}]},
 {icon:"🏘️",title:"Why are towns great?",cb:"32 a 42",ab:"26 a 35",
  mini:"Nombrar cuatro lugares, responder una pregunta con Is there...?, otra con Are there any...? y ubicar dos lugares.",
  g:[
   {n:"Lugares",i:[["🏰","castle"],["🎬","cinema"],["🏛️","museum"],["🚉","station"],["🏥","hospital"],["🌳","park"],["📚","library"],["🏪","shop"],["🍽️","restaurant"],["🏊","swimming pool"]]},
   {n:"Ubicación",note:"¿Dónde está la pelota roja? Mirá la caja azul.",i:[["svg:next","next to"],["svg:opposite","opposite"],["svg:between","between"],["svg:behind","behind"],["svg:front","in front of"],["svg:above","above"]]}],
  qs:[
-  {q:"Is there a park?",e:"🌳",a:["Yes, there is.","No, there isn't."]},
-  {q:"Are there any shops?",e:"🏪🏪🏪",a:["Yes, there are.","No, there aren't."]},
-  {q:"Where's the hospital?",e:"🏪🏥",a:["It's next to the shop."]},
-  {q:"Where's the library?",e:"🏪↔️📚",a:["It's opposite the shop."]}]},
+  {q:"Is there a park?",t:"Lugares",f:"Yes, there ____. / No, there ____.",e:"🌳",a:["Yes, there is.","No, there isn't."]},
+  {q:"Are there any shops?",t:"Lugares",f:"Yes, there ____. / No, there ____.",e:"🏪🏪🏪",a:["Yes, there are.","No, there aren't."]},
+  {q:"Where's the hospital?",t:"Ubicación",f:"It's ____ the shop.",e:"🏪🏥",a:["It's next to the shop."]},
+  {q:"Where's the library?",t:"Ubicación",f:"It's ____ the shop.",e:"🏪↔️📚",a:["It's opposite the shop."]}]},
 {icon:"🍎",title:"How can we be healthy?",cb:"46 a 57",ab:"36 a 45",
  mini:"Nombrar cuatro deportes, decir dos frases con I play/do/go y contestar tres preguntas con Do you...?.",
  g:[
   {n:"Deportes",i:[["🤾","play handball"],["🏉","play rugby"],["🏸","play badminton"],["⚾","play baseball"],["🤸","do trampolining"],["🤸‍♀️","do gymnastics"],["🏃","do athletics"],["🏊","go swimming"],["🚣","go rowing"],["🚵","go mountain biking"]]},
-  {n:"Hábitos",i:[["🍎","eat fruit"],["🍬","eat sweets"],["🥛","drink milk"],["🍋","drink lemonade"],["🏋️","do exercise"],["🌳","go outdoors"]]},
+  {n:"Hábitos",i:[["🍎","eat fruit"],["🍬","eat sweets"],["🥛","drink milk"],["🍋","drink lemonade"],["🏋️","do exercise"],["🚶🏞️","go outdoors"]]},
   {n:"Cuerpo saludable",i:[["🦴","strong bones"],["💇‍♀️","shiny hair"],["🦷","good teeth"],["🧴","healthy skin"]]}],
  qs:[
-  {q:"Do you play handball?",e:"🤾",a:["Yes, I do.","No, I don't."]},
-  {q:"Do you drink milk?",e:"🥛",a:["Yes, I do.","No, I don't."]},
-  {q:"What sports do you do?",e:"🏊🤸🏃",a:["I go swimming.","I do gymnastics."]},
-  {q:"Do you eat fruit?",e:"🍎",a:["Yes, I do.","No, I don't."]}]},
+  {q:"Do you play handball?",t:"Deportes",f:"Yes, I ____. / No, I ____.",e:"🤾",a:["Yes, I do.","No, I don't."]},
+  {q:"Do you drink milk?",t:"Hábitos",f:"Yes, I ____. / No, I ____.",e:"🥛",a:["Yes, I do.","No, I don't."]},
+  {q:"What sports do you do?",t:"Deportes",f:"I go ____. / I do ____.",e:"🏊🤸🏃",a:["I go swimming.","I do gymnastics."]},
+  {q:"Do you eat fruit?",t:"Hábitos",f:"Yes, I ____. / No, I ____.",e:"🍎",a:["Yes, I do.","No, I don't."]}]},
 {icon:"🦒",title:"Why are animals amazing?",cb:"58 a 69",ab:"46 a 55",
  mini:"Nombrar cinco animales, describir dos y responder dos preguntas sobre dónde viven o qué comen.",
  g:[
   {n:"Animales",i:[["🦓","zebra"],["🦒","giraffe"],["🐘","elephant"],["🐒","monkey"],["🦁","lion"],["🐊","crocodile"],["🦛","hippo"],["🐧","penguin"],["🐋","whale"],["🦈","shark"]]},
   {n:"Descripciones",i:[["🐘","big"],["🐭","small"],["🐍","long"],["🦒","tall"]]},
-  {n:"Hábitats y acciones",i:[["🌊","in water"],["🌳","in trees"],["🏞️","on land"],["🌿","eat grass"],["💧","drink water"],["🌙🌳","sleep in a tree"],["🐧🐧🐧","live in a group"],["🦁🐗","hunt animals"]]}],
+  {n:"Hábitats y acciones",i:[["🌊","in water"],["🌳","in trees"],["🏞️","on land"],["🌿","eat grass"],["svg:drink","drink water"],["svg:sleeptree","sleep in a tree"],["svg:group","live in a group"],["svg:hunt","hunt animals"]]}],
  qs:[
-  {q:"What animal is it?",e:"🦒",a:["It's a giraffe."]},
-  {q:"Does it live in water?",e:"🐋",a:["Yes, it does.","No, it doesn't."]},
-  {q:"Do they live in groups?",e:"🐧🐧🐧",a:["Yes, they do.","No, they don't."]},
-  {q:"Does it eat grass?",e:"🦓",a:["Yes, it does.","No, it doesn't."]}]},
+  {q:"What animal is it?",t:"Animales",f:"It's a ____.",e:"🦒",a:["It's a giraffe."]},
+  {q:"Does it live in water?",t:"Hábitats y acciones",f:"Yes, it ____. / No, it ____.",e:"🐋",a:["Yes, it does.","No, it doesn't."]},
+  {q:"Do they live in groups?",t:"Hábitats y acciones",f:"Yes, they ____. / No, they ____.",e:"🐧🐧🐧",a:["Yes, they do.","No, they don't."]},
+  {q:"Does it eat grass?",t:"Hábitats y acciones",f:"Yes, it ____. / No, it ____.",e:"🦓",a:["Yes, it does.","No, it doesn't."]}]},
 {icon:"🏫",title:"What do we do at school?",cb:"70 a 81",ab:"56 a 65",
  mini:"Nombrar cinco materias, decir qué está haciendo uno mismo y qué están haciendo dos personajes usando -ing.",
  g:[
@@ -242,11 +257,11 @@ var U=[
   {n:"Actividades",i:[["🎧","listen to music"],["🚀","learn about space"],["✍️","write a story"],["🖍️","draw"],["👑","dress up"],["⚽","do sport"],["🎤","sing"]]},
   {n:"Números de diez en diez",i:[["10","ten"],["20","twenty"],["30","thirty"],["40","forty"],["50","fifty"],["60","sixty"],["70","seventy"],["80","eighty"],["90","ninety"],["100","one hundred"]]}],
  qs:[
-  {q:"What subject is it?",e:"🔬",a:["It's science."]},
-  {q:"What are you doing?",e:"🖍️",a:["I'm drawing."]},
-  {q:"Are you doing maths?",e:"➗",a:["Yes, I am.","No, I'm not."]},
-  {q:"What's he doing?",e:"👦✍️",a:["He's writing."]},
-  {q:"What's she doing?",e:"👧🎤",a:["She's singing."]}]}
+  {q:"What subject is it?",t:"Materias",f:"It's ____.",e:"🔬",a:["It's science."]},
+  {q:"What are you doing?",t:"Actividades",f:"I'm ____.",e:"🖍️",a:["I'm drawing."]},
+  {q:"Are you doing maths?",t:"Actividades",f:"Yes, I ____. / No, I'm ____.",e:"➗",a:["Yes, I am.","No, I'm not."]},
+  {q:"What's he doing?",t:"Actividades",f:"He's ____.",e:"👦✍️",a:["He's writing."]},
+  {q:"What's she doing?",t:"Actividades",f:"She's ____.",e:"👧🎤",a:["She's singing."]}]}
 ];
 
 /* Simulacro integrador (guía, página 9). */
@@ -258,12 +273,12 @@ var SIM1=[
  {p:"Name three wild animals.",u:4,g:0,n:3},
  {p:"What school subjects can you see?",u:5,g:0,n:5}];
 var SIM2=[
- {q:"Are you hungry?",e:"😋",a:["Yes, I am.","No, I'm not."]},
- {q:"Is she a doctor?",e:"👩‍⚕️",a:["Yes, she is.","No, she isn't."]},
- {q:"Is there a cinema?",e:"🎬",a:["Yes, there is.","No, there isn't."]},
- {q:"Do you play rugby?",e:"🏉",a:["Yes, I do.","No, I don't."]},
- {q:"Does it live in water?",e:"🐋",a:["Yes, it does.","No, it doesn't."]},
- {q:"What's he/she doing?",e:"👦✍️ 👧🎤",a:["He's writing.","She's singing."]}];
+ {q:"Are you hungry?",t:"Sentimientos",f:"Yes, I ____. / No, I'm ____.",e:"😋",a:["Yes, I am.","No, I'm not."]},
+ {q:"Is she a doctor?",t:"Profesiones",f:"Yes, she ____. / No, she ____.",e:"👩‍⚕️",a:["Yes, she is.","No, she isn't."]},
+ {q:"Is there a cinema?",t:"Lugares",f:"Yes, there ____. / No, there ____.",e:"🎬",a:["Yes, there is.","No, there isn't."]},
+ {q:"Do you play rugby?",t:"Deportes",f:"Yes, I ____. / No, I ____.",e:"🏉",a:["Yes, I do.","No, I don't."]},
+ {q:"Does it live in water?",t:"Hábitats y acciones",f:"Yes, it ____. / No, it ____.",e:"🐋",a:["Yes, it does.","No, it doesn't."]},
+ {q:"What's he/she doing?",t:"Actividades",f:"He's ____. / She's ____.",e:"👦✍️ 👧🎤",a:["He's writing.","She's singing."]}];
 
 var progress={};
 try{progress=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){progress={}}
@@ -279,6 +294,10 @@ function starsHtml(n){return '<span class="stars" role="img" aria-label="'+n+' d
 
 /* Dibujos de ubicación: la pelota roja es lo que se busca, la caja azul es la referencia. */
 var SCENES={
+  hunt:'<line x1="3" y1="38" x2="13" y2="38" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/><line x1="1" y1="51" x2="11" y2="51" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/><line x1="3" y1="64" x2="13" y2="64" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/><text x="34" y="51" font-size="34" text-anchor="middle" dominant-baseline="central">🦁</text><path d="M55 51 H70" fill="none" stroke="var(--primary)" stroke-width="4" stroke-linecap="round"/><path d="M63 44 L71 51 L63 58" fill="none" stroke="var(--primary)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><text x="95" y="51" font-size="34" text-anchor="middle" dominant-baseline="central">🦌</text>',
+  drink:'<ellipse cx="96" cy="76" rx="22" ry="7" fill="var(--u3)" fill-opacity=".6" stroke="var(--u3)" stroke-width="3"/><g stroke="var(--fg)" stroke-width="5" stroke-linecap="round"><line x1="24" y1="50" x2="23" y2="78"/><line x1="32" y1="52" x2="33" y2="78"/><line x1="46" y1="52" x2="47" y2="78"/><line x1="54" y1="50" x2="56" y2="78"/></g><path d="M15 38 Q5 44 8 57" fill="none" stroke="var(--fg)" stroke-width="3" stroke-linecap="round"/><clipPath id="zbody"><ellipse cx="38" cy="42" rx="24" ry="13"/></clipPath><ellipse cx="38" cy="42" rx="24" ry="13" fill="var(--surface)" stroke="var(--fg)" stroke-width="3"/><g clip-path="url(#zbody)" stroke="var(--fg)" stroke-width="3.5" stroke-linecap="round"><path d="M27 26 L23 58"/><path d="M35 26 L31 58"/><path d="M43 26 L39 58"/><path d="M51 26 L47 58"/></g><path d="M57 36 L83 61" fill="none" stroke="var(--fg)" stroke-width="15" stroke-linecap="round"/><path d="M57 36 L83 61" fill="none" stroke="var(--surface)" stroke-width="9" stroke-linecap="round"/><path d="M62 37 L68 33 M69 44 L76 40" stroke="var(--fg)" stroke-width="3" stroke-linecap="round"/><path d="M79 59 L80 51 L87 57 Z" fill="var(--fg)"/><ellipse cx="89" cy="68" rx="10" ry="6" transform="rotate(50 89 68)" fill="var(--surface)" stroke="var(--fg)" stroke-width="3"/><circle cx="87" cy="64" r="1.8" fill="var(--fg)"/><ellipse cx="96" cy="77" rx="9" ry="3" fill="none" stroke="var(--fg)" stroke-opacity=".65" stroke-width="2"/><ellipse cx="96" cy="77" rx="16" ry="5" fill="none" stroke="var(--fg)" stroke-opacity=".4" stroke-width="2"/>',
+  sleeptree:'<rect x="86" y="42" width="12" height="40" fill="#8B5A2B" stroke="#5a3a18" stroke-width="2.5"/><rect x="12" y="52" width="80" height="8" rx="4" fill="#8B5A2B" stroke="#5a3a18" stroke-width="2.5"/><circle cx="74" cy="34" r="12" fill="#4CAF50" stroke="#2E7D32" stroke-width="2.5"/><circle cx="108" cy="34" r="12" fill="#4CAF50" stroke="#2E7D32" stroke-width="2.5"/><circle cx="92" cy="26" r="16" fill="#4CAF50" stroke="#2E7D32" stroke-width="2.5"/><ellipse cx="38" cy="45" rx="13" ry="11" fill="#9E9E9E" stroke="#424242" stroke-width="2.5"/><circle cx="27" cy="21" r="6.5" fill="#BDBDBD" stroke="#424242" stroke-width="2.5"/><circle cx="49" cy="21" r="6.5" fill="#BDBDBD" stroke="#424242" stroke-width="2.5"/><circle cx="38" cy="30" r="11" fill="#9E9E9E" stroke="#424242" stroke-width="2.5"/><ellipse cx="38" cy="34" rx="4" ry="5" fill="#37474F"/><path d="M28.5 28 q3.5 3.5 7 0 M40.5 28 q3.5 3.5 7 0" fill="none" stroke="#212121" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="29" cy="54" rx="5" ry="3.5" fill="#757575" stroke="#424242" stroke-width="2"/><ellipse cx="47" cy="54" rx="5" ry="3.5" fill="#757575" stroke="#424242" stroke-width="2"/><text x="58" y="30" font-size="13" font-weight="800" fill="var(--fg)" font-family="Nunito,system-ui,sans-serif">z</text><text x="65" y="19" font-size="17" font-weight="800" fill="var(--fg)" font-family="Nunito,system-ui,sans-serif">Z</text>',
+  group:'<circle cx="60" cy="45" r="42" fill="none" stroke="var(--muted)" stroke-width="3" stroke-dasharray="7 6"/><text x="60" y="28" font-size="24" text-anchor="middle" dominant-baseline="central">🦓</text><text x="40" y="60" font-size="24" text-anchor="middle" dominant-baseline="central">🦓</text><text x="80" y="60" font-size="24" text-anchor="middle" dominant-baseline="central">🦓</text>',
   next:'<rect x="12" y="46" width="40" height="34" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="74" cy="64" r="16" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/>',
   opposite:'<rect x="4" y="36" width="112" height="24" fill="var(--line)"/><line x1="8" y1="48" x2="112" y2="48" stroke="var(--muted)" stroke-width="2.5" stroke-dasharray="8 6"/><rect x="40" y="4" width="40" height="26" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="60" cy="76" r="12" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/>',
   between:'<rect x="6" y="48" width="32" height="32" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="60" cy="64" r="14" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/><rect x="82" y="48" width="32" height="32" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/>',
@@ -286,9 +305,43 @@ var SCENES={
   front:'<rect x="26" y="16" width="68" height="46" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="60" cy="62" r="17" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/>',
   above:'<rect x="30" y="56" width="60" height="24" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="60" cy="24" r="14" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/>'
 };
+function glyphs(e){
+  var s=String(e).replace(/\uFE0F/g,"").replace(/\u200D\p{Extended_Pictographic}/gu,"").replace(/[\u{1F3FB}-\u{1F3FF}]/gu,"");
+  return Array.from(s).length;
+}
+function picCls(e){
+  if(e.indexOf("svg:")===0||/^\d/.test(e))return "";
+  var n=glyphs(e);return n>=3?" p3":n===2?" p2":"";
+}
+function topicChip(t){return t?'<span class="topic">'+esc(t)+'</span>':""}
+function kindChip(k){
+  if(k==="phrase")return '<span class="kind phrase">🗣️ Una frase completa</span>';
+  if(k==="many")return '<span class="kind word">🔤 Varias palabras, una tras otra</span>';
+  return '<span class="kind word">🔤 Una palabra</span>';
+}
+/* Una raya por letra. Los espacios entre palabras y los apóstrofes se mantienen. */
+function blankText(w){
+  return String(w).replace(/[^\s']/g,"_");
+}
+function frameHtml(f,answers){
+  if(!f)return "";
+  var parts=String(f).split(" / "),out=[];
+  parts.forEach(function(p,i){
+    var at=p.indexOf("____"),a=answers&&answers[i],txt="______";
+    if(at>-1&&a){
+      var pre=p.slice(0,at),suf=p.slice(at+4);
+      if(a.indexOf(pre)===0&&a.length>=pre.length+suf.length&&a.slice(a.length-suf.length)===suf){
+        var mid=a.slice(pre.length,a.length-suf.length).trim();
+        if(mid)txt=blankText(mid);
+      }
+    }
+    out.push(esc(p).replace("____",'<span class="gap" aria-label="completar">'+esc(txt)+'</span>'));
+  });
+  return '<p class="frame">'+out.join(" / ")+'</p>';
+}
 function picHtml(e){
   if(e.indexOf("svg:")!==0)return e;
-  var k=e.slice(4),ground=k==="opposite"?"":'<line x1="6" y1="82" x2="114" y2="82" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/>';
+  var k=e.slice(4),ground=(k==="opposite"||k==="group")?"":'<line x1="6" y1="82" x2="114" y2="82" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/>';
   return '<svg class="scene" viewBox="0 0 120 90" aria-hidden="true">'+ground+SCENES[k]+'</svg>';
 }
 
@@ -372,11 +425,13 @@ function homeView(){
 
 function unitView(){
   var i=S.unit,u=U[i],uc="var(--u"+(i+1)+")";
+  var topics=u.g.map(function(g){return g.n}).join(" · "),seen={};
+  var qtopics=u.qs.map(function(q){return q.t}).filter(function(t){if(!t||seen[t])return false;seen[t]=1;return true}).join(" · ");
   var groups=u.g.map(function(g){
     return '<h3 class="gname eyebrow">'+esc(g.n)+'</h3>'+(g.note?'<p class="hint" style="color:var(--muted);margin-bottom:8px">'+esc(g.note)+'</p>':'')+'<div class="grid">'+g.i.map(function(it){
       var num=/^\d/.test(it[0]);
       return '<button class="wcard" data-act="say" data-grid="1" data-t="'+esc(encodeURIComponent(it[1]))+'" aria-label="Escuchar '+esc(it[1])+'">'+
-        '<span class="e" aria-hidden="true"'+(num?' style="font-family:var(--font-display);font-weight:800"':'')+'>'+picHtml(it[0])+'</span>'+
+        '<span class="e'+picCls(it[0])+'" aria-hidden="true"'+(num?' style="font-family:var(--font-display);font-weight:800"':'')+'>'+picHtml(it[0])+'</span>'+
         '<span class="w">'+esc(it[1])+'</span></button>';
     }).join("")+'</div>';
   }).join("");
@@ -385,8 +440,8 @@ function unitView(){
     '<p class="eyebrow">Unidad '+(i+1)+'</p><h2 data-focus>'+esc(u.title)+'</h2>'+
     '<p class="where">Class Book, páginas '+u.cb+' · Activity Book, páginas '+u.ab+'</p></div></div>'+
     '<div class="modes" style="--uc:'+uc+'">'+
-    '<button class="mode" data-act="start" data-m="vocab" data-u="'+i+'"><b>Mirar y nombrar</b><span>Mirá el dibujo y decí la palabra.</span></button>'+
-    '<button class="mode" data-act="start" data-m="qa" data-u="'+i+'"><b>Preguntas</b><span>Escuchá la pregunta y respondé con una frase.</span></button>'+
+    '<button class="mode" data-act="start" data-m="vocab" data-u="'+i+'"><b>Mirar y nombrar</b><span>Una palabra por dibujo.</span><span class="tp">'+esc(topics)+'</span></button>'+
+    '<button class="mode" data-act="start" data-m="qa" data-u="'+i+'"><b>Preguntas</b><span>Una frase completa.</span><span class="tp">'+esc(qtopics)+'</span></button>'+
     '<button class="mode" data-act="start" data-m="mini" data-u="'+i+'"><b>Mini oral</b><span>'+esc(u.mini)+'</span></button></div>'+
     '<div class="sechead"><h3>Palabras de la unidad</h3>'+
     '<button class="tog" data-act="slowtoggle" aria-pressed="'+S.slow+'">🐢 Voz lenta</button></div>'+
@@ -497,9 +552,12 @@ function sessionView(){
   if(st.k==="name"){
     var sv=st.e.indexOf("svg:")===0,num=/^\d/.test(st.e);
     var wordBtn='<button class="word" data-act="say" data-t="'+esc(encodeURIComponent(st.w))+'">'+esc(st.w)+'</button>';
-    body='<p class="eyebrow">'+(st.retry?"Probemos otra vez":"Mirá y nombrá")+'</p>'+
-      '<div class="pic'+(num?" num":"")+'" aria-hidden="true">'+picHtml(st.e)+'</div>'+
-      '<p class="prompt">'+(sv?"Where's the ball?":num?"What number is it?":"What's this?")+'</p>';
+    var wordOut=s.shown||(mic&&st.res&&st.res.kind==="ok");
+    body='<p class="eyebrow">'+(st.retry?"Probemos otra vez":"Mirá y nombrá")+'</p>'+topicChip(st.t)+
+      '<div class="pic'+picCls(st.e)+(num?" num":"")+'" aria-hidden="true">'+picHtml(st.e)+'</div>'+
+      kindChip("word")+
+      (st.t==="Ubicación"?'<p class="hint">¿Dónde está la pelota roja?</p>':"")+
+      (wordOut?"":'<div class="blank" aria-hidden="true">'+esc(blankText(st.w))+'</div>');
     if(mic){
       if(st.res&&st.res.kind==="ok")body+=fbHtml(st)+wordBtn+'<div class="row">'+hearBtns(st.w)+'</div>'+nextBtn();
       else if(s.shown)body+=fbHtml(st)+wordBtn+'<p class="hint">Escuchá cómo se dice y repetilo en voz alta.</p><div class="row">'+hearBtns(st.w)+'</div><div class="row">'+micBtn("Repetilo")+'<button class="btn big" data-act="again">Seguir</button></div>';
@@ -513,9 +571,10 @@ function sessionView(){
   }else if(st.k==="ask"){
     var chips='<div class="ans">'+st.a.map(function(a){return '<button class="achip" data-act="say" data-t="'+esc(encodeURIComponent(a))+'">'+esc(a)+'</button>'}).join("")+'</div>';
     body='<p class="eyebrow">'+(st.retry?"Probemos otra vez":"Escuchá y respondé")+'</p>'+
-      '<div class="pic" aria-hidden="true">'+st.e+'</div>'+
+      topicChip(st.t)+'<div class="pic'+picCls(st.e)+'" aria-hidden="true">'+st.e+'</div>'+
       '<p class="prompt">'+esc(st.q)+'</p>'+
-      '<div class="row">'+hearBtns(st.q)+'</div>';
+      '<div class="row">'+hearBtns(st.q)+'</div>'+
+      kindChip("phrase")+frameHtml(st.f,st.a);
     if(mic){
       if(st.res&&st.res.kind==="ok")body+=fbHtml(st)+nextBtn();
       else if(s.shown)body+=fbHtml(st)+'<p class="hint">Así se puede responder. Tocá una frase para escucharla y repetila.</p>'+chips+'<div class="row">'+micBtn("Repetila")+'<button class="btn big" data-act="again">Seguir</button></div>';
@@ -529,11 +588,11 @@ function sessionView(){
   }else{
     var rev=st.rev||[];
     body='<p class="eyebrow">'+(st.retry?"Probemos otra vez":"Mirá y nombrá")+'</p>'+
-      '<p class="prompt">'+esc(st.p)+'</p><div class="row">'+hearBtns(st.p)+'</div>'+
+      topicChip(st.t)+'<p class="prompt">'+esc(st.p)+'</p><div class="row">'+hearBtns(st.p)+'</div>'+kindChip("many")+
       '<div class="mgrid">'+st.e.map(function(it,j){
         var on=rev.indexOf(j)>-1;
         return '<button class="mpic" data-act="flip" data-j="'+j+'" aria-pressed="'+on+'">'+
-          '<span class="e" aria-hidden="true">'+picHtml(it[0])+'</span><span class="w">'+(on?esc(it[1]):"")+'</span></button>';
+          '<span class="e'+picCls(it[0])+'" aria-hidden="true">'+picHtml(it[0])+'</span><span class="w">'+(on?esc(it[1]):"")+'</span></button>';
       }).join("")+'</div>';
     if(mic){
       body+=fbHtml(st)+'<p class="hint">Decí los nombres de los dibujos en voz alta, seguidos. Tocá un dibujo si necesitás ayuda.</p>';
@@ -573,16 +632,16 @@ function render(){
 function go(){render();window.scrollTo(0,0)}
 
 /* Sesiones de práctica */
-function poolOf(u){var out=[];u.g.forEach(function(g){if(!g.np)out=out.concat(g.i)});return out}
-function nameSteps(items){return items.map(function(it){return {k:"name",e:it[0],w:it[1]}})}
-function askSteps(qs){return shuffle(qs).map(function(q){return {k:"ask",q:q.q,e:q.e,a:q.a}})}
+function poolOf(u){var out=[];u.g.forEach(function(g){if(!g.np)out=out.concat(g.i.map(function(it){return [it[0],it[1],g.n]}))});return out}
+function nameSteps(items){return items.map(function(it){return {k:"name",e:it[0],w:it[1],t:it[2]}})}
+function askSteps(qs){return shuffle(qs).map(function(q){return {k:"ask",q:q.q,e:q.e,a:q.a,t:q.t,f:q.f}})}
 
 function start(mode,ui){
   var steps,title,key,color;
   if(mode==="sim"){
     steps=shuffle(SIM1).map(function(r){
       var items=U[r.u].g[r.g].i;
-      return {k:"many",p:r.p,n:r.n,e:shuffle(items).slice(0,Math.min(items.length,r.n+2)),rev:[],found:[]};
+      return {k:"many",p:r.p,t:U[r.u].g[r.g].n,n:r.n,e:shuffle(items).slice(0,Math.min(items.length,r.n+2)),rev:[],found:[]};
     }).concat(askSteps(SIM2));
     title="Simulacro · Unidades 1 a 6";key="sim";color="var(--primary)";
   }else{
