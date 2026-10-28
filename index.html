@@ -134,6 +134,7 @@ button:focus-visible,h1:focus-visible,h2:focus-visible{outline:3px solid var(--p
 .kind{display:inline-flex;align-items:center;gap:6px;max-width:100%;padding:6px 14px;border-radius:12px;font-weight:800;font-size:.95rem;border:2px solid var(--fg)}
 .kind.word{background:var(--surface);color:var(--fg)}
 .kind.phrase{background:var(--fg);color:var(--bg)}
+.blank.hinted{color:var(--fg);border-style:solid}
 .blank{max-width:100%;white-space:pre-wrap;overflow-wrap:anywhere;text-align:center;padding:10px 22px;border-radius:20px;border:3px dashed var(--muted);font-family:var(--font-display);font-size:clamp(1.6rem,7vw,2.4rem);font-weight:800;line-height:1.1;color:var(--muted);letter-spacing:.14em}
 .frame{font-family:var(--font-display);font-size:clamp(1.3rem,5.5vw,1.8rem);font-weight:700;line-height:1.6;text-wrap:balance}
 .gap{display:inline-block;letter-spacing:.14em;margin-inline:.15em;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
@@ -198,8 +199,8 @@ var U=[
  mini:"Nombrar cuatro regalos, decir una frase con his/her, responder dos preguntas sobre sentimientos y una sobre materiales.",
  g:[
   {n:"Regalos",i:[["🎈","balloon"],["👗","dress"],["📿","necklace"],["🎲","board game"],["⌚","watch"],["🦖","dinosaur"],["📷","camera"],["☂️","umbrella"],["🧩","jigsaw"],["🍫","chocolate"]]},
-  {n:"Sentimientos",i:[["😀","happy"],["😢","sad"],["😋","hungry"],["🥵🥤","thirsty"],["😠","angry"],["😴","tired"]]},
-  {n:"Materiales",i:[["🏺","clay"],["🧴","plastic"],["💳","card"],["🧶","wool"]]}],
+  {n:"Sentimientos",i:[["😀","happy"],["😢","sad"],["😋","hungry"],["🥵🥤🚰","thirsty"],["😠","angry"],["😴","tired"]]},
+  {n:"Materiales",i:[["🏺","clay"],["🧴","plastic"],["✉️💌🏷️","card"],["🧶","wool"]]}],
  qs:[
   {q:"What's this?",t:"Regalos",f:"It's a ____.",e:"📷",a:["It's a camera."]},
   {q:"Whose present is it?",t:"Regalos",f:"This is ____ present.",e:"👧🎁",a:["This is her present."]},
@@ -209,7 +210,7 @@ var U=[
 {icon:"🎮",title:"What's fun about games?",cb:"20 a 30",ab:"16 a 25",
  mini:"Nombrar cinco profesiones y cuatro juguetes; responder dos preguntas con Is he/she...? y diferenciar This is / These are.",
  g:[
-  {n:"Profesiones",i:[["👮","police officer"],["🧑‍🍳","cook"],["⚽","football player"],["🧑‍🔬","scientist"],["🦁","zoo keeper"],["🧑‍⚕️","doctor"],["👷","builder"],["🤵","waiter"],["🧑‍🌾","farmer"],["🧑‍🏫","teacher"]]},
+  {n:"Profesiones",i:[["👮","police officer"],["🧑‍🍳","cook"],["⚽","football player"],["🧑‍🔬","scientist"],["svg:zoo","zoo keeper"],["🧑‍⚕️","doctor"],["👷","builder"],["🤵","waiter"],["🧑‍🌾","farmer"],["🧑‍🏫","teacher"]]},
   {n:"Juguetes y vehículos",i:[["🚌","bus"],["🚗","car"],["🏍️","motorbike"],["🚚","lorry"],["✈️","plane"],["🚆","train"]]},
   {n:"Sentidos",i:[["👀","see"],["👃","smell"],["👅","taste"],["✋","touch"],["👂","hear"]]}],
  qs:[
@@ -221,7 +222,7 @@ var U=[
 {icon:"🏘️",title:"Why are towns great?",cb:"32 a 42",ab:"26 a 35",
  mini:"Nombrar cuatro lugares, responder una pregunta con Is there...?, otra con Are there any...? y ubicar dos lugares.",
  g:[
-  {n:"Lugares",i:[["🏰","castle"],["🎬","cinema"],["🏛️","museum"],["🚉","station"],["🏥","hospital"],["🌳","park"],["📚","library"],["🏪","shop"],["🍽️","restaurant"],["🏊","swimming pool"]]},
+  {n:"Lugares",i:[["🏰","castle"],["🎬","cinema"],["🏛️","museum"],["🚉","station"],["🏥","hospital"],["🌳","park"],["📚","library"],["🛒🛍️","shop"],["🍽️","restaurant"],["🏊","swimming pool"]]},
   {n:"Ubicación",note:"¿Dónde está la pelota roja? Mirá la caja azul.",i:[["svg:next","next to"],["svg:opposite","opposite"],["svg:between","between"],["svg:behind","behind"],["svg:front","in front of"],["svg:above","above"]]}],
  qs:[
   {q:"Is there a park?",t:"Lugares",f:"Yes, there ____. / No, there ____.",e:"🌳",a:["Yes, there is.","No, there isn't."]},
@@ -231,30 +232,33 @@ var U=[
 {icon:"🍎",title:"How can we be healthy?",cb:"46 a 57",ab:"36 a 45",
  mini:"Nombrar cuatro deportes, decir dos frases con I play/do/go y contestar tres preguntas con Do you...?.",
  g:[
-  {n:"Deportes",i:[["🤾","play handball"],["🏉","play rugby"],["🏸","play badminton"],["⚾","play baseball"],["🤸","do trampolining"],["🤸‍♀️","do gymnastics"],["🏃","do athletics"],["🏊","go swimming"],["🚣","go rowing"],["🚵","go mountain biking"]]},
+  {n:"Deportes",i:[["🤾","play handball"],["🏉","play rugby"],["🏸","play badminton"],["⚾","play baseball"],["svg:tramp","do trampolining"],["🤸‍♀️","do gymnastics"],["🏃","do athletics"],["🏊","go swimming"],["🚣🏻‍♀️","go rowing"],["🚵","go mountain biking"]]},
   {n:"Hábitos",i:[["🍎","eat fruit"],["🍬","eat sweets"],["🥛","drink milk"],["🍋","drink lemonade"],["🏋️","do exercise"],["🚶🏞️","go outdoors"]]},
-  {n:"Cuerpo saludable",i:[["🦴","strong bones"],["💇‍♀️","shiny hair"],["🦷","good teeth"],["🧴","healthy skin"]]}],
+  {n:"Cuerpo saludable",i:[["🦴","strong bones"],["💇‍♀️✨","shiny hair"],["🦷","good teeth"],["svg:skin","healthy skin"]]}],
  qs:[
   {q:"Do you play handball?",t:"Deportes",f:"Yes, I ____. / No, I ____.",e:"🤾",a:["Yes, I do.","No, I don't."]},
   {q:"Do you drink milk?",t:"Hábitos",f:"Yes, I ____. / No, I ____.",e:"🥛",a:["Yes, I do.","No, I don't."]},
   {q:"What sports do you do?",t:"Deportes",f:"I go ____. / I do ____.",e:"🏊🤸🏃",a:["I go swimming.","I do gymnastics."]},
-  {q:"Do you eat fruit?",t:"Hábitos",f:"Yes, I ____. / No, I ____.",e:"🍎",a:["Yes, I do.","No, I don't."]}]},
+  {q:"Do you eat fruit?",t:"Hábitos",f:"Yes, I ____. / No, I ____.",e:"🍎",a:["Yes, I do.","No, I don't."]},
+  {q:"Do you eat sweets?",t:"Hábitos",f:"Yes, I ____. / No, I ____.",e:"🍬",a:["Yes, I do.","No, I don't."]}]},
 {icon:"🦒",title:"Why are animals amazing?",cb:"58 a 69",ab:"46 a 55",
  mini:"Nombrar cinco animales, describir dos y responder dos preguntas sobre dónde viven o qué comen.",
  g:[
   {n:"Animales",i:[["🦓","zebra"],["🦒","giraffe"],["🐘","elephant"],["🐒","monkey"],["🦁","lion"],["🐊","crocodile"],["🦛","hippo"],["🐧","penguin"],["🐋","whale"],["🦈","shark"]]},
-  {n:"Descripciones",i:[["🐘","big"],["🐭","small"],["🐍","long"],["🦒","tall"]]},
-  {n:"Hábitats y acciones",i:[["🌊","in water"],["🌳","in trees"],["🏞️","on land"],["🌿","eat grass"],["svg:drink","drink water"],["svg:sleeptree","sleep in a tree"],["svg:group","live in a group"],["svg:hunt","hunt animals"]]}],
+  {n:"Descripciones",note:"Mirá el animal marcado o la flecha.",i:[["svg:big","big"],["svg:small","small"],["svg:long","long"],["svg:tall","tall"]]},
+  {n:"Hábitats y acciones",i:[["🌊","in water"],["svg:land","on land"],["🌿","eat grass"],["🐒🍌","like fruit"],["svg:drink","drink water"],["svg:sleeptree","sleep in a tree"],["svg:group","live in a group"],["svg:hunt","hunt animals"]]}],
  qs:[
   {q:"What animal is it?",t:"Animales",f:"It's a ____.",e:"🦒",a:["It's a giraffe."]},
+  {q:"Is it big or small?",t:"Descripciones",f:"It's ____.",e:"svg:big",a:["It's big."]},
+  {q:"Is it big or small?",t:"Descripciones",f:"It's ____.",e:"svg:small",a:["It's small."]},
   {q:"Does it live in water?",t:"Hábitats y acciones",f:"Yes, it ____. / No, it ____.",e:"🐋",a:["Yes, it does.","No, it doesn't."]},
   {q:"Do they live in groups?",t:"Hábitats y acciones",f:"Yes, they ____. / No, they ____.",e:"🐧🐧🐧",a:["Yes, they do.","No, they don't."]},
   {q:"Does it eat grass?",t:"Hábitats y acciones",f:"Yes, it ____. / No, it ____.",e:"🦓",a:["Yes, it does.","No, it doesn't."]}]},
 {icon:"🏫",title:"What do we do at school?",cb:"70 a 81",ab:"56 a 65",
  mini:"Nombrar cinco materias, decir qué está haciendo uno mismo y qué están haciendo dos personajes usando -ing.",
  g:[
-  {n:"Materias",i:[["🏃","PE"],["💻","ICT"],["➗","maths"],["🔤","English"],["🌍","geography"],["🔬","science"],["🎭","drama"],["🎨","art"],["🎵","music"],["📜","history"]]},
-  {n:"Actividades",i:[["🎧","listen to music"],["🚀","learn about space"],["✍️","write a story"],["🖍️","draw"],["👑","dress up"],["⚽","do sport"],["🎤","sing"]]},
+  {n:"Materias",i:[["🏃","PE"],["💻","ICT"],["➗","maths"],["svg:english","English"],["🌍","geography"],["🔬","science"],["🎭","drama"],["🎨","art"],["🎵","music"],["📜","history"]]},
+  {n:"Actividades",i:[["🎧","listen to music"],["🚀","learn about space"],["✍️","write a story"],["🖍️","draw"],["🧛‍♀️🤡🦸🏻‍♂️","dress up"],["⚽","do sport"],["🎤","sing"]]},
   {n:"Números de diez en diez",i:[["10","ten"],["20","twenty"],["30","thirty"],["40","forty"],["50","fifty"],["60","sixty"],["70","seventy"],["80","eighty"],["90","ninety"],["100","one hundred"]]}],
  qs:[
   {q:"What subject is it?",t:"Materias",f:"It's ____.",e:"🔬",a:["It's science."]},
@@ -294,16 +298,25 @@ function starsHtml(n){return '<span class="stars" role="img" aria-label="'+n+' d
 
 /* Dibujos de ubicación: la pelota roja es lo que se busca, la caja azul es la referencia. */
 var SCENES={
-  hunt:'<line x1="3" y1="38" x2="13" y2="38" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/><line x1="1" y1="51" x2="11" y2="51" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/><line x1="3" y1="64" x2="13" y2="64" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/><text x="34" y="51" font-size="34" text-anchor="middle" dominant-baseline="central">🦁</text><path d="M55 51 H70" fill="none" stroke="var(--primary)" stroke-width="4" stroke-linecap="round"/><path d="M63 44 L71 51 L63 58" fill="none" stroke="var(--primary)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><text x="95" y="51" font-size="34" text-anchor="middle" dominant-baseline="central">🦌</text>',
+  hunt:'<text x="22" y="24" font-size="28" text-anchor="middle" dominant-baseline="central">🦁</text><path d="M44 24 H66 M58 17 L66 24 L58 31" fill="none" stroke="var(--primary)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><text x="92" y="24" font-size="28" text-anchor="middle" dominant-baseline="central">🦌</text><text x="28" y="60" font-size="28" text-anchor="middle" dominant-baseline="central">🐟</text><path d="M76 60 H54 M62 53 L54 60 L62 67" fill="none" stroke="var(--primary)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><text x="98" y="60" font-size="28" text-anchor="middle" dominant-baseline="central">🦈</text>',
   drink:'<ellipse cx="96" cy="76" rx="22" ry="7" fill="var(--u3)" fill-opacity=".6" stroke="var(--u3)" stroke-width="3"/><g stroke="var(--fg)" stroke-width="5" stroke-linecap="round"><line x1="24" y1="50" x2="23" y2="78"/><line x1="32" y1="52" x2="33" y2="78"/><line x1="46" y1="52" x2="47" y2="78"/><line x1="54" y1="50" x2="56" y2="78"/></g><path d="M15 38 Q5 44 8 57" fill="none" stroke="var(--fg)" stroke-width="3" stroke-linecap="round"/><clipPath id="zbody"><ellipse cx="38" cy="42" rx="24" ry="13"/></clipPath><ellipse cx="38" cy="42" rx="24" ry="13" fill="var(--surface)" stroke="var(--fg)" stroke-width="3"/><g clip-path="url(#zbody)" stroke="var(--fg)" stroke-width="3.5" stroke-linecap="round"><path d="M27 26 L23 58"/><path d="M35 26 L31 58"/><path d="M43 26 L39 58"/><path d="M51 26 L47 58"/></g><path d="M57 36 L83 61" fill="none" stroke="var(--fg)" stroke-width="15" stroke-linecap="round"/><path d="M57 36 L83 61" fill="none" stroke="var(--surface)" stroke-width="9" stroke-linecap="round"/><path d="M62 37 L68 33 M69 44 L76 40" stroke="var(--fg)" stroke-width="3" stroke-linecap="round"/><path d="M79 59 L80 51 L87 57 Z" fill="var(--fg)"/><ellipse cx="89" cy="68" rx="10" ry="6" transform="rotate(50 89 68)" fill="var(--surface)" stroke="var(--fg)" stroke-width="3"/><circle cx="87" cy="64" r="1.8" fill="var(--fg)"/><ellipse cx="96" cy="77" rx="9" ry="3" fill="none" stroke="var(--fg)" stroke-opacity=".65" stroke-width="2"/><ellipse cx="96" cy="77" rx="16" ry="5" fill="none" stroke="var(--fg)" stroke-opacity=".4" stroke-width="2"/>',
   sleeptree:'<rect x="86" y="42" width="12" height="40" fill="#8B5A2B" stroke="#5a3a18" stroke-width="2.5"/><rect x="12" y="52" width="80" height="8" rx="4" fill="#8B5A2B" stroke="#5a3a18" stroke-width="2.5"/><circle cx="74" cy="34" r="12" fill="#4CAF50" stroke="#2E7D32" stroke-width="2.5"/><circle cx="108" cy="34" r="12" fill="#4CAF50" stroke="#2E7D32" stroke-width="2.5"/><circle cx="92" cy="26" r="16" fill="#4CAF50" stroke="#2E7D32" stroke-width="2.5"/><ellipse cx="38" cy="45" rx="13" ry="11" fill="#9E9E9E" stroke="#424242" stroke-width="2.5"/><circle cx="27" cy="21" r="6.5" fill="#BDBDBD" stroke="#424242" stroke-width="2.5"/><circle cx="49" cy="21" r="6.5" fill="#BDBDBD" stroke="#424242" stroke-width="2.5"/><circle cx="38" cy="30" r="11" fill="#9E9E9E" stroke="#424242" stroke-width="2.5"/><ellipse cx="38" cy="34" rx="4" ry="5" fill="#37474F"/><path d="M28.5 28 q3.5 3.5 7 0 M40.5 28 q3.5 3.5 7 0" fill="none" stroke="#212121" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="29" cy="54" rx="5" ry="3.5" fill="#757575" stroke="#424242" stroke-width="2"/><ellipse cx="47" cy="54" rx="5" ry="3.5" fill="#757575" stroke="#424242" stroke-width="2"/><text x="58" y="30" font-size="13" font-weight="800" fill="var(--fg)" font-family="Nunito,system-ui,sans-serif">z</text><text x="65" y="19" font-size="17" font-weight="800" fill="var(--fg)" font-family="Nunito,system-ui,sans-serif">Z</text>',
+  big:'<text x="36" y="50" font-size="52" text-anchor="middle" dominant-baseline="central">🐘</text><text x="94" y="67" font-size="18" text-anchor="middle" dominant-baseline="central">🐭</text><circle cx="36" cy="50" r="31" fill="none" stroke="var(--primary)" stroke-width="3.5" stroke-dasharray="6 4"/>',
+  small:'<text x="36" y="50" font-size="52" text-anchor="middle" dominant-baseline="central">🐘</text><text x="94" y="67" font-size="18" text-anchor="middle" dominant-baseline="central">🐭</text><circle cx="94" cy="67" r="14" fill="none" stroke="var(--primary)" stroke-width="3.5" stroke-dasharray="6 4"/>',
+  long:'<path d="M8 36 q10 -16 20 0 t20 0 t20 0 t20 0 t18 0" fill="none" stroke="#4CAF50" stroke-width="9" stroke-linecap="round"/><path d="M8 36 q10 -16 20 0 t20 0 t20 0 t20 0 t18 0" fill="none" stroke="#2E7D32" stroke-width="2" stroke-dasharray="2 8" stroke-linecap="round"/><circle cx="106" cy="36" r="6" fill="#4CAF50" stroke="#2E7D32" stroke-width="2.5"/><path d="M8 56 H112 M16 49 L8 56 L16 63 M104 49 L112 56 L104 63" fill="none" stroke="var(--primary)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><text x="22" y="72" font-size="16" text-anchor="middle" dominant-baseline="central">🐛</text>',
+  tall:'<text x="34" y="46" font-size="60" text-anchor="middle" dominant-baseline="central">🦒</text><path d="M66 10 V74 M59 18 L66 10 L73 18 M59 66 L66 74 L73 66" fill="none" stroke="var(--primary)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><text x="96" y="68" font-size="22" text-anchor="middle" dominant-baseline="central">🐕</text>',
+  land:'<text x="100" y="22" font-size="26" text-anchor="middle" dominant-baseline="central">🏞️</text><path d="M0 62 Q30 52 60 60 T120 58 V82 H0 Z" fill="#8BC34A" stroke="#558B2F" stroke-width="3"/><text x="38" y="46" font-size="38" text-anchor="middle" dominant-baseline="central">🐘</text><text x="86" y="48" font-size="32" text-anchor="middle" dominant-baseline="central">🦓</text><path d="M12 76 l2 -7 l2 7 M22 78 l2 -6 l2 6 M64 76 l2 -7 l2 7 M104 76 l2 -6 l2 6" fill="none" stroke="#33691E" stroke-width="2.5" stroke-linecap="round"/>',
+  zoo:'<text x="96" y="34" font-size="46" text-anchor="middle" dominant-baseline="central">🦒</text><rect x="60" y="58" width="58" height="4" fill="#A9742F"/><rect x="60" y="70" width="58" height="4" fill="#A9742F"/><g fill="#8B5A2B" stroke="#5a3a18" stroke-width="1.5"><rect x="62" y="52" width="5" height="30"/><rect x="78" y="52" width="5" height="30"/><rect x="94" y="52" width="5" height="30"/><rect x="110" y="52" width="5" height="30"/></g><rect x="26" y="64" width="9" height="16" rx="2" fill="#6B4F2A"/><rect x="39" y="64" width="9" height="16" rx="2" fill="#6B4F2A"/><rect x="24" y="36" width="26" height="30" rx="7" fill="#9AA33C" stroke="#5B6120" stroke-width="2.5"/><path d="M48 44 L61 49" stroke="#F2C29B" stroke-width="6" stroke-linecap="round"/><text x="66" y="46" font-size="14" text-anchor="middle" dominant-baseline="central">🍎</text><circle cx="37" cy="26" r="10" fill="#F2C29B" stroke="#8A5A3A" stroke-width="2.5"/><path d="M26 21 a11 10 0 0 1 22 0 z" fill="#C9A24A" stroke="#8A6A1E" stroke-width="2"/><ellipse cx="37" cy="21" rx="17" ry="4" fill="#C9A24A" stroke="#8A6A1E" stroke-width="2"/><circle cx="33" cy="27" r="1.4" fill="#3b2a1a"/><circle cx="41" cy="27" r="1.4" fill="#3b2a1a"/><path d="M33 31 q4 3 8 0" fill="none" stroke="#3b2a1a" stroke-width="1.8" stroke-linecap="round"/>',
+  skin:'<g stroke="#FFC83D" stroke-width="3" stroke-linecap="round"><path d="M60 6 V12 M24 18 L28 22 M96 18 L92 22 M12 46 H18 M102 46 H108"/></g><circle cx="60" cy="48" r="30" fill="#F6CBA7" stroke="#8A5A3A" stroke-width="3"/><circle cx="43" cy="56" r="6" fill="#F28B82" fill-opacity=".6"/><circle cx="77" cy="56" r="6" fill="#F28B82" fill-opacity=".6"/><path d="M42 44 q5 -6 10 0 M68 44 q5 -6 10 0" fill="none" stroke="#3b2a1a" stroke-width="3" stroke-linecap="round"/><path d="M48 60 q12 12 24 0" fill="none" stroke="#3b2a1a" stroke-width="3" stroke-linecap="round"/><text x="20" y="30" font-size="16" text-anchor="middle" dominant-baseline="central">✨</text><text x="102" y="30" font-size="16" text-anchor="middle" dominant-baseline="central">✨</text><text x="100" y="72" font-size="14" text-anchor="middle" dominant-baseline="central">✨</text><text x="18" y="70" font-size="14" text-anchor="middle" dominant-baseline="central">✨</text>',
+  tramp:'<g stroke="var(--fg)" stroke-width="4" stroke-linecap="round"><line x1="22" y1="68" x2="19" y2="82"/><line x1="98" y1="68" x2="101" y2="82"/><line x1="44" y1="71" x2="43" y2="82"/><line x1="76" y1="71" x2="77" y2="82"/></g><ellipse cx="60" cy="66" rx="42" ry="8" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><path d="M20 68 q4 6 8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0" fill="none" stroke="var(--fg)" stroke-opacity=".7" stroke-width="2"/><path d="M44 58 q-3 4 0 8 M76 58 q3 4 0 8" fill="none" stroke="var(--fg)" stroke-opacity=".5" stroke-width="2.5" stroke-linecap="round"/><g transform="translate(0,-9)"><g stroke-linecap="round"><path d="M60 34 L43 15 M60 34 L77 15" stroke="#F2C29B" stroke-width="5" fill="none"/><path d="M60 34 V50" stroke="#E5484D" stroke-width="11" fill="none"/><path d="M60 50 L47 61 M60 50 L73 59" stroke="#2F7FE0" stroke-width="7" fill="none"/></g><circle cx="60" cy="23" r="9" fill="#F2C29B" stroke="#8A5A3A" stroke-width="2"/><path d="M51 21 a9 9 0 0 1 18 0 q-9 -4 -18 0 z" fill="#4A3320"/><circle cx="57" cy="24" r="1.3" fill="#3b2a1a"/><circle cx="63" cy="24" r="1.3" fill="#3b2a1a"/><path d="M56 28 q4 3 8 0" fill="none" stroke="#3b2a1a" stroke-width="1.6" stroke-linecap="round"/></g><path d="M30 40 v-8 M24 34 l6 -6 l6 6 M90 40 v-8 M84 34 l6 -6 l6 6" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
+  english:'<rect x="6" y="6" width="108" height="56" rx="16" fill="var(--surface)" stroke="var(--fg)" stroke-width="3"/><path d="M28 61 L20 78 L46 61 Z" fill="var(--surface)" stroke="var(--fg)" stroke-width="3" stroke-linejoin="round"/><path d="M24 60 H44" stroke="var(--surface)" stroke-width="5"/><text x="44" y="35" font-size="21" font-weight="800" fill="var(--fg)" font-family="Baloo 2,Nunito,system-ui,sans-serif" text-anchor="middle" dominant-baseline="central">Hello!</text><text x="95" y="35" font-size="30" text-anchor="middle" dominant-baseline="central">👋🏼</text>',
   group:'<circle cx="60" cy="45" r="42" fill="none" stroke="var(--muted)" stroke-width="3" stroke-dasharray="7 6"/><text x="60" y="28" font-size="24" text-anchor="middle" dominant-baseline="central">🦓</text><text x="40" y="60" font-size="24" text-anchor="middle" dominant-baseline="central">🦓</text><text x="80" y="60" font-size="24" text-anchor="middle" dominant-baseline="central">🦓</text>',
-  next:'<rect x="12" y="46" width="40" height="34" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="74" cy="64" r="16" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/>',
-  opposite:'<rect x="4" y="36" width="112" height="24" fill="var(--line)"/><line x1="8" y1="48" x2="112" y2="48" stroke="var(--muted)" stroke-width="2.5" stroke-dasharray="8 6"/><rect x="40" y="4" width="40" height="26" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="60" cy="76" r="12" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/>',
-  between:'<rect x="6" y="48" width="32" height="32" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="60" cy="64" r="14" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/><rect x="82" y="48" width="32" height="32" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/>',
-  behind:'<circle cx="60" cy="42" r="20" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/><rect x="26" y="50" width="68" height="30" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/>',
-  front:'<rect x="26" y="16" width="68" height="46" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="60" cy="62" r="17" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/>',
-  above:'<rect x="30" y="56" width="60" height="24" rx="4" fill="var(--u3)" stroke="var(--fg)" stroke-width="3"/><circle cx="60" cy="24" r="14" fill="var(--primary)" stroke="var(--fg)" stroke-width="3"/>'
+  next:'<ellipse cx="30" cy="82" rx="26" ry="3.5" fill="#000" fill-opacity=".18"/><polygon points="10,44 18,36 52,36 44,44" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="10,44 18,36 52,36 44,44" fill="#fff" fill-opacity=".4"/><polygon points="44,44 52,36 52,74 44,82" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="44,44 52,36 52,74 44,82" fill="#000" fill-opacity=".28"/><rect x="10" y="44" width="34" height="38" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><ellipse cx="84" cy="82" rx="18" ry="3.5" fill="#000" fill-opacity=".18"/><circle cx="84" cy="66" r="16" fill="var(--primary)" stroke="var(--fg)" stroke-width="2.5"/><circle cx="78.2" cy="60.2" r="3.8" fill="#fff" fill-opacity=".65"/><path d="M55 66 H67 M59 61 L54 66 L59 71 M63 61 L68 66 L63 71" fill="none" stroke="var(--fg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>',
+  opposite:'<rect x="0" y="36" width="120" height="30" fill="#9AA3B5" fill-opacity=".55"/><path d="M4 51 H116" stroke="#fff" stroke-width="3" stroke-dasharray="9 7"/><ellipse cx="60" cy="31" rx="24" ry="3.5" fill="#000" fill-opacity=".18"/><polygon points="44,8 52,0 84,0 76,8" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="44,8 52,0 84,0 76,8" fill="#fff" fill-opacity=".4"/><polygon points="76,8 84,0 84,22 76,30" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="76,8 84,0 84,22 76,30" fill="#000" fill-opacity=".28"/><rect x="44" y="8" width="32" height="22" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><circle cx="60" cy="76" r="11" fill="var(--primary)" stroke="var(--fg)" stroke-width="2.5"/><circle cx="56.0" cy="72.0" r="2.6" fill="#fff" fill-opacity=".65"/><path d="M60 34 V61 M55 40 L60 34 L65 40 M55 55 L60 61 L65 55" fill="none" stroke="var(--fg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 0"/>',
+  between:'<ellipse cx="20" cy="82" rx="20" ry="3.5" fill="#000" fill-opacity=".18"/><polygon points="6,52 14,44 40,44 32,52" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="6,52 14,44 40,44 32,52" fill="#fff" fill-opacity=".4"/><polygon points="32,52 40,44 40,74 32,82" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="32,52 40,44 40,74 32,82" fill="#000" fill-opacity=".28"/><rect x="6" y="52" width="26" height="30" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><ellipse cx="102" cy="82" rx="20" ry="3.5" fill="#000" fill-opacity=".18"/><polygon points="88,52 96,44 122,44 114,52" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="88,52 96,44 122,44 114,52" fill="#fff" fill-opacity=".4"/><polygon points="114,52 122,44 122,74 114,82" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="114,52 122,44 122,74 114,82" fill="#000" fill-opacity=".28"/><rect x="88" y="52" width="26" height="30" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><ellipse cx="64" cy="82" rx="15" ry="3.5" fill="#000" fill-opacity=".18"/><circle cx="64" cy="66" r="14" fill="var(--primary)" stroke="var(--fg)" stroke-width="2.5"/><circle cx="59.0" cy="61.0" r="3.4" fill="#fff" fill-opacity=".65"/>',
+  behind:'<circle cx="44" cy="32" r="18" fill="var(--primary)" stroke="var(--fg)" stroke-width="2.5"/><circle cx="37.5" cy="25.5" r="4.3" fill="#fff" fill-opacity=".65"/><ellipse cx="56" cy="82" rx="36" ry="3.5" fill="#000" fill-opacity=".18"/><polygon points="22,40 30,32 92,32 84,40" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="22,40 30,32 92,32 84,40" fill="#fff" fill-opacity=".4"/><polygon points="84,40 92,32 92,74 84,82" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="84,40 92,32 92,74 84,82" fill="#000" fill-opacity=".28"/><rect x="22" y="40" width="62" height="42" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/>',
+  front:'<ellipse cx="54" cy="57" rx="26" ry="3.5" fill="#000" fill-opacity=".18"/><polygon points="34,20 42,12 82,12 74,20" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="34,20 42,12 82,12 74,20" fill="#fff" fill-opacity=".4"/><polygon points="74,20 82,12 82,48 74,56" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="74,20 82,12 82,48 74,56" fill="#000" fill-opacity=".28"/><rect x="34" y="20" width="40" height="36" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><ellipse cx="56" cy="83" rx="20" ry="3.5" fill="#000" fill-opacity=".18"/><circle cx="56" cy="62" r="20" fill="var(--primary)" stroke="var(--fg)" stroke-width="2.5"/><circle cx="48.8" cy="54.8" r="4.8" fill="#fff" fill-opacity=".65"/>',
+  above:'<ellipse cx="54" cy="83" rx="32" ry="3.5" fill="#000" fill-opacity=".18"/><polygon points="30,54 38,46 86,46 78,54" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="30,54 38,46 86,46 78,54" fill="#fff" fill-opacity=".4"/><polygon points="78,54 86,46 86,74 78,82" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="78,54 86,46 86,74 78,82" fill="#000" fill-opacity=".28"/><rect x="30" y="54" width="48" height="28" fill="var(--u3)" stroke="var(--fg)" stroke-width="2.5" stroke-linejoin="round"/><circle cx="58" cy="22" r="14" fill="var(--primary)" stroke="var(--fg)" stroke-width="2.5"/><circle cx="53.0" cy="17.0" r="3.4" fill="#fff" fill-opacity=".65"/><path d="M58 40 V47 M53 42 L58 47 L63 42" fill="none" stroke="var(--fg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'
 };
 function glyphs(e){
   var s=String(e).replace(/\uFE0F/g,"").replace(/\u200D\p{Extended_Pictographic}/gu,"").replace(/[\u{1F3FB}-\u{1F3FF}]/gu,"");
@@ -320,10 +333,14 @@ function kindChip(k){
   return '<span class="kind word">🔤 Una palabra</span>';
 }
 /* Una raya por letra. Los espacios entre palabras y los apóstrofes se mantienen. */
+function hintText(w){
+  return String(w).replace(/\S+/g,function(t){return t.charAt(0)+blankText(t.slice(1))});
+}
+function pistaBtn(st){return st.hint?"":'<button class="btn big" data-act="hint">💡 Pista</button>'}
 function blankText(w){
   return String(w).replace(/[^\s']/g,"_");
 }
-function frameHtml(f,answers){
+function frameHtml(f,answers,hint){
   if(!f)return "";
   var parts=String(f).split(" / "),out=[];
   parts.forEach(function(p,i){
@@ -332,7 +349,7 @@ function frameHtml(f,answers){
       var pre=p.slice(0,at),suf=p.slice(at+4);
       if(a.indexOf(pre)===0&&a.length>=pre.length+suf.length&&a.slice(a.length-suf.length)===suf){
         var mid=a.slice(pre.length,a.length-suf.length).trim();
-        if(mid)txt=blankText(mid);
+        if(mid)txt=hint?hintText(mid):blankText(mid);
       }
     }
     out.push(esc(p).replace("____",'<span class="gap" aria-label="completar">'+esc(txt)+'</span>'));
@@ -556,34 +573,34 @@ function sessionView(){
     body='<p class="eyebrow">'+(st.retry?"Probemos otra vez":"Mirá y nombrá")+'</p>'+topicChip(st.t)+
       '<div class="pic'+picCls(st.e)+(num?" num":"")+'" aria-hidden="true">'+picHtml(st.e)+'</div>'+
       kindChip("word")+
-      (st.t==="Ubicación"?'<p class="hint">¿Dónde está la pelota roja?</p>':"")+
-      (wordOut?"":'<div class="blank" aria-hidden="true">'+esc(blankText(st.w))+'</div>');
+      (st.t==="Ubicación"?'<p class="hint">¿Dónde está la pelota roja?</p>':"")+(st.t==="Descripciones"?'<p class="hint">Mirá el animal marcado o la flecha.</p>':"")+
+      (wordOut?"":'<div class="blank'+(st.hint?' hinted':'')+'" aria-hidden="true">'+esc(st.hint?hintText(st.w):blankText(st.w))+'</div>');
     if(mic){
       if(st.res&&st.res.kind==="ok")body+=fbHtml(st)+wordBtn+'<div class="row">'+hearBtns(st.w)+'</div>'+nextBtn();
       else if(s.shown)body+=fbHtml(st)+wordBtn+'<p class="hint">Escuchá cómo se dice y repetilo en voz alta.</p><div class="row">'+hearBtns(st.w)+'</div><div class="row">'+micBtn("Repetilo")+'<button class="btn big" data-act="again">Seguir</button></div>';
-      else body+=fbHtml(st)+'<p class="hint">Apretá el micrófono y decí la palabra en voz alta.</p><div class="row">'+micBtn("Decilo")+'<button class="btn big" data-act="reveal">Ver palabra</button></div>';
+      else body+=fbHtml(st)+'<p class="hint">Apretá el micrófono y decí la palabra en voz alta.</p><div class="row">'+micBtn("Decilo")+pistaBtn(st)+'<button class="btn big" data-act="reveal">Ver palabra</button></div>';
     }else if(s.shown){
       body+=wordBtn+'<p class="hint">Escuchá y repetí en voz alta.</p><div class="row">'+hearBtns(st.w)+'</div>'+marks();
     }else{
       body+='<p class="hint">Decí la palabra en voz alta. Después tocá para ver si coincide.</p>'+
-        '<button class="btn primary big" data-act="reveal">Ver palabra</button>';
+        '<div class="row">'+pistaBtn(st)+'<button class="btn primary big" data-act="reveal">Ver palabra</button></div>';
     }
   }else if(st.k==="ask"){
     var chips='<div class="ans">'+st.a.map(function(a){return '<button class="achip" data-act="say" data-t="'+esc(encodeURIComponent(a))+'">'+esc(a)+'</button>'}).join("")+'</div>';
     body='<p class="eyebrow">'+(st.retry?"Probemos otra vez":"Escuchá y respondé")+'</p>'+
-      topicChip(st.t)+'<div class="pic'+picCls(st.e)+'" aria-hidden="true">'+st.e+'</div>'+
+      topicChip(st.t)+'<div class="pic'+picCls(st.e)+'" aria-hidden="true">'+picHtml(st.e)+'</div>'+(st.t==="Descripciones"?'<p class="hint">Mirá el animal marcado con el círculo.</p>':"")+
       '<p class="prompt">'+esc(st.q)+'</p>'+
       '<div class="row">'+hearBtns(st.q)+'</div>'+
-      kindChip("phrase")+frameHtml(st.f,st.a);
+      kindChip("phrase")+frameHtml(st.f,st.a,st.hint);
     if(mic){
       if(st.res&&st.res.kind==="ok")body+=fbHtml(st)+nextBtn();
       else if(s.shown)body+=fbHtml(st)+'<p class="hint">Así se puede responder. Tocá una frase para escucharla y repetila.</p>'+chips+'<div class="row">'+micBtn("Repetila")+'<button class="btn big" data-act="again">Seguir</button></div>';
-      else body+=fbHtml(st)+'<p class="hint">Apretá el micrófono y respondé con una frase.</p><div class="row">'+micBtn("Respondé")+'<button class="btn big" data-act="reveal">Ver respuesta</button></div>';
+      else body+=fbHtml(st)+'<p class="hint">Apretá el micrófono y respondé con una frase.</p><div class="row">'+micBtn("Respondé")+pistaBtn(st)+'<button class="btn big" data-act="reveal">Ver respuesta</button></div>';
     }else if(s.shown){
       body+='<p class="hint">Así se puede responder. Tocá una frase para escucharla y repetila en voz alta.</p>'+chips+marks();
     }else{
       body+='<p class="hint">Pensá la respuesta y decila en voz alta.</p>'+
-        '<button class="btn primary big" data-act="reveal">Ver respuesta</button>';
+        '<div class="row">'+pistaBtn(st)+'<button class="btn primary big" data-act="reveal">Ver respuesta</button></div>';
     }
   }else{
     var rev=st.rev||[];
@@ -592,13 +609,13 @@ function sessionView(){
       '<div class="mgrid">'+st.e.map(function(it,j){
         var on=rev.indexOf(j)>-1;
         return '<button class="mpic" data-act="flip" data-j="'+j+'" aria-pressed="'+on+'">'+
-          '<span class="e'+picCls(it[0])+'" aria-hidden="true">'+picHtml(it[0])+'</span><span class="w">'+(on?esc(it[1]):"")+'</span></button>';
+          '<span class="e'+picCls(it[0])+'" aria-hidden="true">'+picHtml(it[0])+'</span><span class="w">'+(on?esc(it[1]):(st.hint?esc(hintText(it[1])):""))+'</span></button>';
       }).join("")+'</div>';
     if(mic){
       body+=fbHtml(st)+'<p class="hint">Decí los nombres de los dibujos en voz alta, seguidos. Tocá un dibujo si necesitás ayuda.</p>';
-      body+=(st.found&&st.found.length>=st.n)?nextBtn():'<div class="row">'+micBtn("Decilos")+'<button class="btn big" data-act="again">Seguir</button></div>';
+      body+=(st.found&&st.found.length>=st.n)?nextBtn():'<div class="row">'+micBtn("Decilos")+pistaBtn(st)+'<button class="btn big" data-act="again">Seguir</button></div>';
     }else{
-      body+='<p class="hint">Nombrá los dibujos en voz alta. Tocá un dibujo para ver y escuchar la palabra.</p>'+marks();
+      body+='<p class="hint">Nombrá los dibujos en voz alta. Tocá un dibujo para ver y escuchar la palabra.</p>'+(st.hint?"":'<div class="row">'+pistaBtn(st)+'</div>')+marks();
     }
   }
   return '<div class="stop" style="--uc:'+s.color+'"><button class="back" data-act="quit">✕ Salir</button>'+
@@ -661,7 +678,7 @@ function speakEntry(){
 function advance(ok){
   var s=S.sess,st=s.steps[s.i];
   if(ok){if(!st.retry&&!st.peeked)s.ok++}
-  else if(!st.retry){var c={};for(var k in st)c[k]=st[k];c.retry=true;c.rev=[];c.found=[];c.res=null;c.tries=0;c.peeked=false;s.steps.push(c)}
+  else if(!st.retry){var c={};for(var k in st)c[k]=st[k];c.retry=true;c.rev=[];c.found=[];c.res=null;c.tries=0;c.peeked=false;c.hint=false;s.steps.push(c)}
   s.i++;s.shown=false;
   if(s.i>=s.steps.length){
     var r=s.ok/s.total;
@@ -690,6 +707,7 @@ document.addEventListener("click",function(e){
   if(a==="quit"){if(s&&s.u>=0){S.unit=s.u;S.view="unit"}else{S.view="home"}go();return}
   if(!st)return;
   if(a==="listen"){listen();return}
+  if(a==="hint"){st.hint=true;render();return}
   if(a==="reveal"){s.shown=true;if(micOn())st.peeked=true;render();say(st.k==="name"?st.w:st.a[0]);return}
   if(a==="flip"){
     var j=+b.dataset.j;st.rev=st.rev||[];
